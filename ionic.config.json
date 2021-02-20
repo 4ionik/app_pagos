@@ -1,0 +1,7 @@
+{
+  "name": "app_pagos",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

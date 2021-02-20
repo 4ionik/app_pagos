@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pagos</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form  #form="ngForm">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Buscar Orden</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+          <ion-item>
+            <ion-label position="floating">Orden</ion-label>
+            <ion-input type="text" required></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-button  stype="button" expand="full" size="default" shape="round" color="primary">Buscar</ion-button>
+          </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>
