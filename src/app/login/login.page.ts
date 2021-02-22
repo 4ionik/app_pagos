@@ -8,6 +8,8 @@ import {
 import { Router } from "@angular/router";
 import { AuthenticateService } from "../services/authenticate.service";
 import { Storage } from "@ionic/storage";
+import { ToastController } from '@ionic/angular';
+import { PostService } from '../services/post.service'
 
 @Component({
   selector: "app-login",
@@ -15,6 +17,10 @@ import { Storage } from "@ionic/storage";
   styleUrls: ["./login.page.scss"]
 })
 export class LoginPage implements OnInit {
+
+  username: string;
+  password: string;
+
   loginForm: FormGroup;
   validation_messages = {
     email: [
@@ -29,7 +35,7 @@ export class LoginPage implements OnInit {
 
   errorMessage: string = "";
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authservice: AuthenticateService, private storage: Storage) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authservice: AuthenticateService, private storage: Storage, public toastCtrl: ToastController, private postPvdr: PostService) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl(
         "",
@@ -55,6 +61,50 @@ export class LoginPage implements OnInit {
     }).catch(err => {
       this.errorMessage = err;
     });
+  }
+
+  async prosesLogin(){
+    if(this.username != "" && this.username != ""){
+      let body = {
+        username: this.username,
+        password: this.password,
+        aksi: 'login'
+      };
+
+      this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
+        console.log(data);
+        var alertpesan = data['msg'];
+        // console.log(data['result']);
+        if(data['success']){
+          console.log('True');
+          this.storage.set("isUserLoggedIn", true);
+          this.storage.set('session_storage', data['result']);
+          this.router.navigate(['/menu/home']);
+          const toast = await this.toastCtrl.create({
+            message: 'Login Succesfully.',
+            duration: 2000
+          });
+          toast.present();
+          this.username = "";
+          this.password = "";
+          console.log(data);
+        }else{
+          console.log('False');
+          const toast = await this.toastCtrl.create({
+            message: alertpesan,
+            duration: 2000
+          });
+          toast.present();
+        }
+      });
+
+    }else{
+      const toast = await this.toastCtrl.create({
+        message: 'Username or Password Invalid.',
+        duration: 2000
+	    });
+	  toast.present();
+    }
   }
 
 }

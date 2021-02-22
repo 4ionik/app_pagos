@@ -5,6 +5,7 @@ import { Injectable } from "@angular/core";
 })
 export class AuthenticateService {
   constructor() {}
+
   loginUser(credential) {
     return new Promise((accept, reject) => {
 

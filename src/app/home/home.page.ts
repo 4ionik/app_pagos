@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Storage } from '@ionic/Storage';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,18 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  anggota: any;
+  username: string;
+
+  constructor(private storage: Storage) {}
+
+  ionViewWillEnter(){
+    this.storage.get('session_storage').then((res)=>{
+      this.anggota = res;
+      this.username = this.anggota.username;
+      console.log(res);
+    });
+
+  }
 
 }
