@@ -43,7 +43,7 @@ export class RemesasPage implements OnInit {
     if (this.idordenInput != "") {
       let body = {
         idOrden: this.idordenInput,
-        aksi: 'doFilterOrden'
+        aksi: 'doFilterOrdenRemesa'
       }
 
       this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
