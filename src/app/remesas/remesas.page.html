@@ -8,5 +8,20 @@
 </ion-header>
 
 <ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Buscar orden a remesar</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Orden</ion-label>
+          <ion-input type="text" [(ngModel)]="idordenInput" name="idOrden" required></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-button  stype="button" expand="full" size="default" shape="round" color="primary" (click)="doFilterOrden()">Buscar</ion-button>
+        </ion-item>
+    </ion-card-content>
+  </ion-card>
+
 
 </ion-content>

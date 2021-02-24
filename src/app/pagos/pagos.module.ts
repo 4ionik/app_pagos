@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -8,13 +8,16 @@ import { PagosPageRoutingModule } from './pagos-routing.module';
 
 import { PagosPage } from './pagos.page';
 
+import { NumberInputComponent } from '../components/number-input/number-input.component';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     PagosPageRoutingModule
   ],
-  declarations: [PagosPage]
+  declarations: [PagosPage, NumberInputComponent]
 })
 export class PagosPageModule {}
