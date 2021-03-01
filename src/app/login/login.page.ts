@@ -11,6 +11,11 @@ import { Storage } from "@ionic/storage";
 import { ToastController } from '@ionic/angular';
 import { PostService } from '../services/post.service'
 
+interface Empresa {
+  idempresa: number;
+  nombre_empresa: string;
+}
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.page.html",
@@ -20,6 +25,10 @@ export class LoginPage implements OnInit {
 
   username: string;
   password: string;
+
+  empresa = [];
+  select_emp: Empresa[] = [];
+  idempresa = 0;
 
   loginForm: FormGroup;
   validation_messages = {
@@ -51,7 +60,9 @@ export class LoginPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.doRefresh();
+  }
 
   loginUser(credentials) {
     this.authservice.loginUser(credentials).then(res => {
@@ -65,46 +76,82 @@ export class LoginPage implements OnInit {
 
   async prosesLogin(){
     if(this.username != "" && this.username != ""){
-      let body = {
-        username: this.username,
-        password: this.password,
-        aksi: 'login'
-      };
-
-      this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-        console.log(data);
-        var alertpesan = data['msg'];
-        // console.log(data['result']);
-        if(data['success']){
-          console.log('True');
-          this.storage.set("isUserLoggedIn", true);
-          this.storage.set('session_storage', data['result']);
-          this.router.navigate(['/menu/home']);
-          const toast = await this.toastCtrl.create({
-            message: 'Login Succesfully.',
-            duration: 2000
-          });
-          toast.present();
-          this.username = "";
-          this.password = "";
+      if (this.idempresa > 0) {
+        let body = {
+          username: this.username,
+          password: this.password,
+          idempresa: this.idempresa,
+          aksi: 'login'
+        };
+  
+        this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
           console.log(data);
-        }else{
-          console.log('False');
-          const toast = await this.toastCtrl.create({
-            message: alertpesan,
-            duration: 2000
-          });
-          toast.present();
-        }
-      });
-
+          var alertpesan = data['msg'];
+          // console.log(data['result']);
+          if(data['success']){
+            console.log('True');
+            this.storage.set("isUserLoggedIn", true);
+            this.storage.set('session_storage', data['result']);
+            this.router.navigate(['/menu/home']);
+            const toast = await this.toastCtrl.create({
+              message: 'Inicio de sesion exitoso',
+              duration: 2000
+            });
+            toast.present();
+            this.username = "";
+            this.password = "";
+            console.log(data);
+          }else{
+            console.log('False');
+            const toast = await this.toastCtrl.create({
+              message: alertpesan,
+              duration: 2000
+            });
+            toast.present();
+          }
+        });
+      }else{
+        const toast = await this.toastCtrl.create({
+          message: 'Debe seleccionar una empresa para continuar.',
+          duration: 2000
+        });
+        toast.present();
+      }
     }else{
       const toast = await this.toastCtrl.create({
-        message: 'Username or Password Invalid.',
+        message: 'Nombre de usuario o contraseña no válidos.',
         duration: 2000
 	    });
-	  toast.present();
+	    toast.present();
     }
+  }
+
+  doRefresh(){
+    let body = {
+      aksi: 'doRefreshEmpresa'
+    }
+
+    this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
+      console.log(data);
+      if(data['success']){
+        this.empresa = data['result'];
+        if (this.empresa.length > 0) {
+          for (let index = 0; index < this.empresa.length; index++) {
+            
+            this.select_emp[index] = <Empresa>{idempresa: this.empresa[index]['idempresa'], nombre_empresa: this.empresa[index]['nombre_empresa']};
+          }
+        }else{
+          
+          this.select_emp[0] = <Empresa>{idempresa: 0, nombre_empresa: 'No hay datos'};
+        }
+        console.log(this.select_emp);
+      }
+    })
+  }
+
+  empresaChange($event){
+    console.log($event.target.value);
+    this.idempresa = $event.target.value;
   }
 
 }

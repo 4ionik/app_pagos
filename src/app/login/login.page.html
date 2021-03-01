@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>Form Login</ion-title>
   </ion-toolbar>
@@ -22,4 +22,72 @@
 	<div>
 	  <ion-button expand="block" padding color="tertiary" (click)="prosesLogin()">Sign In</ion-button>
 	</div>
+</ion-content> -->
+
+<ion-header>
+	<ion-toolbar color="mango">
+		<ion-title>Login</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content padding='true'>
+	<!-- <div class="center">
+		<img src="assets/img/logo.png" class="smallLogo" />
+		<h1>Sign In</h1>
+	</div> -->
+	<div class="vertical-center">
+		<div class="center">
+			<ion-img src="assets/img/logo.png" class="ion-align-self-end"></ion-img>
+		</div>   
+	</div>
+	<!-- <ion-grid>
+		<ion-row>
+			<ion-col size="4" offset="4">
+			  <ion-img src="assets/img/logo.png" alt="logo-image"></ion-img>
+			</ion-col>
+	   </ion-row>
+	</ion-grid> -->
+	<ion-card>
+		<ion-card-header>
+			<!-- <ion-card-title>Login</ion-card-title> -->
+		</ion-card-header>
+		<ion-card-content>
+			<ion-list>
+				<ion-item>
+					<ion-label position="stacked">Username</ion-label>
+					<ion-input autocomplete="off" type="text" name="username" [(ngModel)]="username"></ion-input>
+				</ion-item>
+	
+				<ion-item>
+					<ion-label position="stacked">Password</ion-label>
+					<ion-input autocomplete="off" type="password" name="password" [(ngModel)]="password">
+					</ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-label position="stacked">Empresa</ion-label>
+					<ion-select placeholder="Selecciona una opci&oacute;n" value="0" okText="Aceptar" cancelText="Cancelar" (ionChange)="empresaChange($event)">
+					  <ion-select-option *ngFor="let p of this.select_emp" [value]="p.idempresa">{{p.nombre_empresa}}</ion-select-option>
+					</ion-select>
+				</ion-item>
+	
+			</ion-list>
+			<ion-button expand="block" share="round" color="dark" (click)="prosesLogin()">Login</ion-button>
+		</ion-card-content>
+	</ion-card>
+	<!-- <form>
+		<ion-list>
+			<ion-item>
+				<ion-label position="stacked">Username</ion-label>
+				<ion-input autocomplete="off" type="text" name="username" [(ngModel)]="username"></ion-input>
+			</ion-item>
+
+			<ion-item>
+				<ion-label position="stacked">Password</ion-label>
+				<ion-input autocomplete="off" type="password" name="password" [(ngModel)]="password">
+				</ion-input>
+			</ion-item>
+
+		</ion-list>
+		<ion-button expand="block" share="round" color="success" (click)="prosesLogin()">Login</ion-button>
+	</form> -->
 </ion-content>
