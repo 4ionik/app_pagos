@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../services/post.service';
 import { ToastController, Platform } from '@ionic/angular';
-import { Storage } from '@ionic/Storage';
+import { Storage } from '@ionic/storage';
 import { CurrencyPipe } from '@angular/common';
 
 interface Tipo {
