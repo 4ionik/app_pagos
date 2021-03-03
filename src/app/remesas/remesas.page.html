@@ -15,12 +15,51 @@
     <ion-card-content>
         <ion-item>
           <ion-label position="floating">Orden</ion-label>
-          <ion-input type="text" [(ngModel)]="idordenInput" name="idOrden" required></ion-input>
+          
+          <ion-select [(ngModel)] ="selectedValues" multiple="true" placeholder="Selecciona una opci&oacute;n" value="1" okText="Aceptar" cancelText="Cancelar">
+            <ion-select-option *ngFor="let p of this.select_orden" [value]="p.id_orden">{{p.nombre_orden}}</ion-select-option>
+          </ion-select>
         </ion-item>
         <ion-item lines="none">
-          <ion-button  stype="button" expand="full" size="default" shape="round" color="primary" (click)="doFilterOrden()">Buscar</ion-button>
+          <ion-button  stype="button" expand="full" size="default" shape="round" color="primary" (click)="doFilterPago()">Agregar</ion-button>
         </ion-item>
     </ion-card-content>
+
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Detalle Pagos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+       <ion-row class="header-row">
+        <ion-col size="2">Orden</ion-col>
+        <ion-col size="6">Cliente</ion-col>
+        <ion-col size="auto">Monto</ion-col>   
+       </ion-row>
+       <ion-row *ngFor="let r of rows">
+        <ion-col size="2" >{{r.Orden}}</ion-col>
+        <ion-col size="6"  >{{r.Cliente}}</ion-col>
+        <ion-col size="auto" text-center>{{r.Monto}}</ion-col>  
+       </ion-row>  
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Seleccionar Banco</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Banco</ion-label>
+        <ion-select [(ngModel)] ="selectedBanco" placeholder="Selecciona una opci&oacute;n" value="1" okText="Aceptar" cancelText="Cancelar">
+          <ion-select-option class="ion-text-wrap" *ngFor="let b of this.select_banco" [value]="b.id_banco">{{b.nombre_banco}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-button  stype="button" expand="full" size="default" shape="round" color="primary" (click)="doFilterPago()">Agregar</ion-button>
+      </ion-item>
+    </ion-card-content>
+    
   </ion-card>
 
 
