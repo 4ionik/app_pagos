@@ -23,7 +23,11 @@ export class PagosPage implements OnInit {
   idorden = 0;
   client: string;
   amount: any;
+<<<<<<< Updated upstream
   precision = 2;
+=======
+  precision = 1;
+>>>>>>> Stashed changes
   idTipoPago = 1;
   idusuario: string;
   anggota: any;
@@ -63,7 +67,6 @@ export class PagosPage implements OnInit {
         idOrden: this.idOrden,
         aksi: 'doFilterOrden'
       }
-
       this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
         // console.log(data['result'].minLength);
         console.log(data);
@@ -75,10 +78,17 @@ export class PagosPage implements OnInit {
             this.identifier_order = this.ordenes[0]['identifier_order'];
             this.client = this.ordenes[0]['client'];
             this.cost = this.ordenes[0]['cost'];
+<<<<<<< Updated upstream
             if (this.idTipoPago > 1) {
               this.box_price_formatted = this.getCurrency(0);
             }else{
               this.box_price_formatted = this.getCurrency(this.cost)
+=======
+            if (this.idTipoPago == 1) {
+              this.box_price_formatted = this.getCurrency(this.cost);
+            }else{
+              this.box_price_formatted = this.getCurrency(0);
+>>>>>>> Stashed changes
             }
             this.ishidden = false;
           }else{
@@ -113,6 +123,11 @@ export class PagosPage implements OnInit {
           this.select_pago[0] = <Tipo>{idtipopago: 0, nombre_tipo_pago: 'No hay datos'};
         }
         console.log(this.select_pago);
+        if (this.idTipoPago === 1) {
+          this.box_price_formatted = this.getCurrency(this.cost)
+        }else{
+          this.box_price_formatted = this.getCurrency(0)
+        }
       }
     })
   }
@@ -138,13 +153,24 @@ export class PagosPage implements OnInit {
   }
 
   tipoPagoChange($event){
-    console.log($event.target.value);
     this.idTipoPago = $event.target.value;
+<<<<<<< Updated upstream
     if (this.idTipoPago > 1) {
       this.box_price_formatted = this.getCurrency(0);
     }else{
       this.box_price_formatted = this.getCurrency(this.cost)
     }
+=======
+    if (this.idTipoPago == 1) {
+      this.box_price_formatted = this.getCurrency(this.cost)
+    }else{
+      this.box_price_formatted = this.getCurrency(0)
+    }
+  }
+
+  clearTipoPago(){
+    this.idTipoPago = 1;
+>>>>>>> Stashed changes
   }
 
   async savePagos(){

@@ -10,7 +10,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class MenuPage implements OnInit {
 
-  pages = [
+  public pages = [
     {
       tittle: 'Home',
       url: 'home'
@@ -23,9 +23,52 @@ export class MenuPage implements OnInit {
       tittle: 'Remesas',
       url: 'remesas'
     }
-  ]
+  ];
+
+  public pagesAdmin = [
+    {
+      tittle: 'Home',
+      url: 'home'
+    },
+    {
+      tittle: 'Pagos',
+      url: 'pagos'
+    },
+    {
+      tittle: 'Remesas',
+      url: 'remesas'
+    },
+    {
+      tittle: 'Mantenimiento',
+      subPages: [
+        { 
+          tittle: 'Usuarios', 
+          url: 'usuarios' 
+        },
+        { 
+          tittle: 'Empresas', 
+          url: 'empresas' 
+        },
+        { 
+          tittle: 'Tipos de pago', 
+          url: 'tipo-pago' 
+        },
+        { 
+          tittle: 'Ordenes', 
+          url: 'ordenes' 
+        }
+      ]
+    }
+  ];
 
   selectedPath = '';
+
+  idusuario: string;
+  anggota: any;
+  username:string;
+  idrol = 0;
+  idempresa = 0;
+  isAdmin = true;
 
   constructor(private router: Router, private storage: Storage, public toastCtrl: ToastController) {
     this.router.events.subscribe((event: RouterEvent) =>{
@@ -33,7 +76,23 @@ export class MenuPage implements OnInit {
     });
   }
 
+  ionViewWillEnter(){
+    this.storage.get('session_storage').then((res)=>{
+      console.log(res);
+      this.anggota = res;
+      this.username = this.anggota.username;
+      this.idusuario = this.anggota.user_id;
+      this.idrol = this.anggota.idrol;
+      this.idempresa = this.anggota.idempresa;
+    });
+  }
+
   ngOnInit() {
+    if (this.idrol==1) {
+      this.isAdmin = false;
+    }else{
+      this.isAdmin = true;
+    }
   }
 
   async prosesLogout(){

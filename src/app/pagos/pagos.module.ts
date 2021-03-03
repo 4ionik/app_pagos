@@ -8,8 +8,6 @@ import { PagosPageRoutingModule } from './pagos-routing.module';
 
 import { PagosPage } from './pagos.page';
 
-import { NumberInputComponent } from '../components/number-input/number-input.component';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -18,6 +16,6 @@ import { NumberInputComponent } from '../components/number-input/number-input.co
     IonicModule,
     PagosPageRoutingModule
   ],
-  declarations: [PagosPage, NumberInputComponent]
+  declarations: [PagosPage]
 })
 export class PagosPageModule {}

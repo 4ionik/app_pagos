@@ -25,6 +25,26 @@ const routes: Routes = [
     path: 'remesas',
     loadChildren: () => import('./remesas/remesas.module').then( m => m.RemesasPageModule)
   },
+  {
+    path: 'mantenimiento',
+    loadChildren: () => import('./mantenimiento/mantenimiento.module').then( m => m.MantenimientoPageModule)
+  },
+  {
+    path: 'usuarios',
+    loadChildren: () => import('./usuarios/usuarios.module').then( m => m.UsuariosPageModule)
+  },
+  {
+    path: 'empresas',
+    loadChildren: () => import('./empresas/empresas.module').then( m => m.EmpresasPageModule)
+  },
+  {
+    path: 'tipo-pago',
+    loadChildren: () => import('./tipo-pago/tipo-pago.module').then( m => m.TipoPagoPageModule)
+  },
+  {
+    path: 'ordenes',
+    loadChildren: () => import('./ordenes/ordenes.module').then( m => m.OrdenesPageModule)
+  },
 ];
 
 @NgModule({

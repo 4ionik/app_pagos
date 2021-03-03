@@ -65,7 +65,7 @@
 				</ion-item>
 				<ion-item>
 					<ion-label position="stacked">Empresa</ion-label>
-					<ion-select placeholder="Selecciona una opci&oacute;n" value="0" okText="Aceptar" cancelText="Cancelar" (ionChange)="empresaChange($event)">
+					<ion-select placeholder="Selecciona una opci&oacute;n" value="1" okText="Aceptar" cancelText="Cancelar" (ionChange)="empresaChange($event)">
 					  <ion-select-option *ngFor="let p of this.select_emp" [value]="p.idempresa">{{p.nombre_empresa}}</ion-select-option>
 					</ion-select>
 				</ion-item>

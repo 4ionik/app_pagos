@@ -10,7 +10,11 @@ android {
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
 
+<<<<<<< Updated upstream
 
+=======
+    implementation "androidx.core:core:1.1.0"
+>>>>>>> Stashed changes
 }
 
 
