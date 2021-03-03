@@ -23,11 +23,7 @@ export class PagosPage implements OnInit {
   idorden = 0;
   client: string;
   amount: any;
-<<<<<<< Updated upstream
-  precision = 2;
-=======
   precision = 1;
->>>>>>> Stashed changes
   idTipoPago = 1;
   idusuario: string;
   anggota: any;
@@ -78,17 +74,10 @@ export class PagosPage implements OnInit {
             this.identifier_order = this.ordenes[0]['identifier_order'];
             this.client = this.ordenes[0]['client'];
             this.cost = this.ordenes[0]['cost'];
-<<<<<<< Updated upstream
-            if (this.idTipoPago > 1) {
-              this.box_price_formatted = this.getCurrency(0);
-            }else{
-              this.box_price_formatted = this.getCurrency(this.cost)
-=======
             if (this.idTipoPago == 1) {
               this.box_price_formatted = this.getCurrency(this.cost);
             }else{
               this.box_price_formatted = this.getCurrency(0);
->>>>>>> Stashed changes
             }
             this.ishidden = false;
           }else{
@@ -154,13 +143,6 @@ export class PagosPage implements OnInit {
 
   tipoPagoChange($event){
     this.idTipoPago = $event.target.value;
-<<<<<<< Updated upstream
-    if (this.idTipoPago > 1) {
-      this.box_price_formatted = this.getCurrency(0);
-    }else{
-      this.box_price_formatted = this.getCurrency(this.cost)
-    }
-=======
     if (this.idTipoPago == 1) {
       this.box_price_formatted = this.getCurrency(this.cost)
     }else{
@@ -170,7 +152,6 @@ export class PagosPage implements OnInit {
 
   clearTipoPago(){
     this.idTipoPago = 1;
->>>>>>> Stashed changes
   }
 
   async savePagos(){
