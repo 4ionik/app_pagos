@@ -24,7 +24,7 @@ export class PagosPage implements OnInit {
   client: string;
   amount: any;
   precision = 2;
-  idTipoPago = 0;
+  idTipoPago = 1;
   idusuario: string;
   anggota: any;
   username:string;
@@ -32,6 +32,7 @@ export class PagosPage implements OnInit {
   idempresa = 0;
   box_price = 0;
   box_price_formatted= "$0";
+  cost: number;
 
   tipo_pago = [];
   select_pago: Tipo[] = [];
@@ -73,6 +74,12 @@ export class PagosPage implements OnInit {
             this.idorden = this.ordenes[0]['idorden'];
             this.identifier_order = this.ordenes[0]['identifier_order'];
             this.client = this.ordenes[0]['client'];
+            this.cost = this.ordenes[0]['cost'];
+            if (this.idTipoPago > 1) {
+              this.box_price_formatted = this.getCurrency(0);
+            }else{
+              this.box_price_formatted = this.getCurrency(this.cost)
+            }
             this.ishidden = false;
           }else{
             const toast = await this.toastCtrl.create({
@@ -133,6 +140,11 @@ export class PagosPage implements OnInit {
   tipoPagoChange($event){
     console.log($event.target.value);
     this.idTipoPago = $event.target.value;
+    if (this.idTipoPago > 1) {
+      this.box_price_formatted = this.getCurrency(0);
+    }else{
+      this.box_price_formatted = this.getCurrency(this.cost)
+    }
   }
 
   async savePagos(){

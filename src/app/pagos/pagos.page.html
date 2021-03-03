@@ -38,16 +38,14 @@
             <ion-input type="text" [(ngModel)]="this.client" name="client" disabled></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Monto</ion-label>
-            <!-- <number-input [precision]="precision" [amount]="''" (amountEntered)="amountChanged($event)"></number-input> -->
-            <!-- <ion-input type="text" required></ion-input> -->
-            <ion-input type="string" elastic [(ngModel)]="this.box_price_formatted" name="box_price_formatted" (change)='onChangePrice($event)' (keyup)="onPriceUp($event)"></ion-input>
-          </ion-item>
-          <ion-item>
             <ion-label position="floating">Tipo de transacci&oacute;n</ion-label>
             <ion-select placeholder="Selecciona una opci&oacute;n" value="1" okText="Aceptar" cancelText="Cancelar" (ionChange)="tipoPagoChange($event)">
               <ion-select-option *ngFor="let p of this.select_pago" [value]="p.idtipopago">{{p.nombre_tipo_pago}}</ion-select-option>
             </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Monto</ion-label>
+            <ion-input type="string" elastic [(ngModel)]="this.box_price_formatted" name="box_price_formatted" (change)='onChangePrice($event)' (keyup)="onPriceUp($event)"></ion-input>
           </ion-item>
           <ion-item lines="none">
             <ion-button  stype="button" expand="full" size="default" shape="round" color="primary" (click)="savePagos()">Registrar</ion-button>
