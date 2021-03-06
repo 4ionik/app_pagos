@@ -48,7 +48,7 @@ export class PagosPage implements OnInit {
       this.idrol = this.anggota.idrol;
       this.idempresa = this.anggota.idempresa;
     });
-
+    
   }
 
   ngOnInit() {

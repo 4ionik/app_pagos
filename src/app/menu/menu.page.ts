@@ -85,14 +85,16 @@ export class MenuPage implements OnInit {
       this.idrol = this.anggota.idrol;
       this.idempresa = this.anggota.idempresa;
     });
-  }
-
-  ngOnInit() {
     if (this.idrol==1) {
       this.isAdmin = false;
     }else{
       this.isAdmin = true;
     }
+    console.log(this.isAdmin);
+  }
+
+  ngOnInit() {
+    
   }
 
   async prosesLogout(){

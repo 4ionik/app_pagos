@@ -11,19 +11,18 @@ import { IonicStorageModule } from "@ionic/storage";
 
 import { PostService } from './services/post.service';
 import { HttpClientModule } from '@angular/common/http';
-import { NumberInputComponent } from '../app/components/number-input/number-input.component';
 import { CurrencyPipe } from '@angular/common';
 
 @NgModule({
-  declarations: [AppComponent, NumberInputComponent],
-  entryComponents: [NumberInputComponent],
+  declarations: [AppComponent],
+  entryComponents: [],
   imports: [
     BrowserModule,
-    FormsModule,
     HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    FormsModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

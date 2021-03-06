@@ -7,5 +7,50 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
-  <h1>{{username}}</h1>
+  <ion-grid>
+		<ion-row>
+			<ion-col sizeLg="2">
+				<div></div>
+			</ion-col>
+			<ion-col sizeLg="8" class="vertical-center">
+				<ion-img [src]="app_url" class="img-logo"></ion-img>
+			</ion-col>
+			<ion-col sizeLg="2">
+				<div></div>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+  <div class="ion-padding">
+    <!-- <ion-card>
+      <ion-card-header>
+        Bar Chart
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #barCanvas style="position: relative; height:20vh; width:40vw"></canvas>
+      </ion-card-content>
+    </ion-card> -->
+    <div class="box blue">
+      <h1>$1,000</h1>
+      <p>Recolectados para el dia 03/03/2021</p>
+    </div>
+
+    <ion-card>
+      <ion-card-header>
+        Doughnut Chart
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #doughnutCanvas style="position: relative; height:20vh; width:40vw"></canvas>
+      </ion-card-content>
+    </ion-card>
+ 
+    <ion-card>
+      <ion-card-header>
+        Line Chart
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #lineCanvas style="position: relative; height:20vh; width:40vw"></canvas>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

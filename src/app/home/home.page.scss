@@ -25,3 +25,78 @@
 #container a {
   text-decoration: none;
 }
+
+.box {
+  border-radius: 5px;
+  padding: 3em;
+  margin-left: 10px;
+  margin-right: 10px;
+  // Add a flex rule for browsers not supporting the
+  // CSS Grid Layout spec
+  flex: 1 1 300px;
+
+  h1 {
+     font-weight: bold;
+     font-size: 24pt;
+ }
+}
+
+// Add the necessary classes for styling the 
+// background colours of each panel in the 
+// project UI
+.red {
+	background-color: rgba(220, 83, 81, 1);
+}
+
+.green {
+	background-color: rgba(187, 225, 123, 1);
+}
+
+.blue {
+	background-color: rgba(131, 150, 225, 1);
+}
+
+.purple {
+	background-color: rgba(155, 121, 170, 1);
+}
+
+.yellow {
+    background-color: rgba(235, 229, 39, 1);
+}
+
+.violet {
+    background-color: rgba(213, 118, 211, 1);
+}
+
+.orange {
+	background-color: rgba(213, 151, 46, 1);
+}
+
+.turquoise {
+	background-color: rgba(105, 203, 217, 1);
+}
+
+
+.vertical-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center_img{
+  width: 20%;
+  height: 20%;
+  display: block;
+  margin: 0 auto;
+}
+
+.fire-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.img-logo {
+  height: 150px;
+  width: 150px;
+}

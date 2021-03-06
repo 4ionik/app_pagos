@@ -11,10 +11,10 @@ import { PagosPage } from './pagos.page';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    PagosPageRoutingModule
+    PagosPageRoutingModule,
+    FormsModule
   ],
   declarations: [PagosPage]
 })

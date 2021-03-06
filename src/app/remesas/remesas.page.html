@@ -16,7 +16,7 @@
         <ion-item>
           <ion-label position="floating">Orden</ion-label>
           
-          <ion-select [(ngModel)] ="selectedValues" multiple="true" placeholder="Selecciona una opci&oacute;n" value="1" okText="Aceptar" cancelText="Cancelar">
+          <ion-select [(ngModel)] ="selectedValues" multiple="true" placeholder="Selecciona una opci&oacute;n" value="0" okText="Aceptar" cancelText="Cancelar">
             <ion-select-option *ngFor="let p of this.select_orden" [value]="p.id_orden">{{p.nombre_orden}}</ion-select-option>
           </ion-select>
         </ion-item>
@@ -26,41 +26,97 @@
     </ion-card-content>
 
   </ion-card>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Detalle Pagos</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-       <ion-row class="header-row">
-        <ion-col size="2">Orden</ion-col>
-        <ion-col size="6">Cliente</ion-col>
-        <ion-col size="auto">Monto</ion-col>   
-       </ion-row>
-       <ion-row *ngFor="let r of rows">
-        <ion-col size="2" >{{r.Orden}}</ion-col>
-        <ion-col size="6"  >{{r.Cliente}}</ion-col>
-        <ion-col size="auto" text-center>{{r.Monto}}</ion-col>  
-       </ion-row>  
-    </ion-card-content>
-  </ion-card>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Seleccionar Banco</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-item>
-        <ion-label position="floating">Banco</ion-label>
-        <ion-select [(ngModel)] ="selectedBanco" placeholder="Selecciona una opci&oacute;n" value="1" okText="Aceptar" cancelText="Cancelar">
-          <ion-select-option class="ion-text-wrap" *ngFor="let b of this.select_banco" [value]="b.id_banco">{{b.nombre_banco}}</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-button  stype="button" expand="full" size="default" shape="round" color="primary" (click)="doFilterPago()">Agregar</ion-button>
-      </ion-item>
-    </ion-card-content>
-    
-  </ion-card>
 
+  <div>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Detalle Pagos</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+         <ion-row class="header-row">
+          <ion-col size="2">Orden</ion-col>
+          <ion-col size="6">Cliente</ion-col>
+          <ion-col size="auto">Monto</ion-col>   
+         </ion-row>
+         <ion-row *ngFor="let r of rows">
+          <ion-col size="2" >{{r.Orden}}</ion-col>
+          <ion-col size="6"  >{{r.Cliente}}</ion-col>
+          <ion-col size="auto" text-center>{{r.Monto}}</ion-col>  
+         </ion-row>  
+      </ion-card-content>
+    </ion-card>
+  
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Seleccionar Banco</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Banco</ion-label>
+          <ion-select [(ngModel)] ="selectedBanco" placeholder="Selecciona una opci&oacute;n" value="0" okText="Aceptar" cancelText="Cancelar">
+            <ion-select-option class="ion-text-wrap" *ngFor="let b of this.select_banco" [value]="b.id_banco">{{b.nombre_banco}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-card-content>
+      
+    </ion-card>
+  
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Seleccionar Viaticos</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Viaticos</ion-label>
+          <ion-select [(ngModel)] ="selectedViaticos" multiple="true" placeholder="Selecciona una opci&oacute;n" value="0" okText="Aceptar" cancelText="Cancelar">
+            <ion-select-option class="ion-text-wrap" *ngFor="let c of this.select_viat" [value]="c.id_viatico">{{c.nombre_viatico}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Monto Total</ion-label>
+          <ion-input type="string" elastic [(ngModel)]="this.box_price_formatted" name="box_price_formatted" (change)='onChangePrice($event)' (keyup)="onPriceUp($event)"></ion-input>
+        </ion-item>
+      </ion-card-content>
+      
+    </ion-card>
+  
+    <!-- <ion-card>
+      <ion-card-content>
+        <div text-center>
+          <ion-img [src]="photo" style="border: 2px solid black; width:30%; height:30%;"></ion-img>
+        </div>
+      </ion-card-content>
+    </ion-card> -->
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col
+        size="6"
+        *ngFor="let img of images; let i = index;"
+        class="vertical-center"
+      >
+   
+        <img class="img-logo" [src]="this.URL_base + img.url"/>
+        <ion-fab vertical="bottom" horizontal="end">
+          <ion-fab-button
+            color="danger"
+            size="small"
+            (click)="deleteImage(img, i)"
+          >
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  
+    <ion-fab slot="fixed" color="primary" vertical="bottom" horizontal="end">
+      <ion-fab-button (click)="selectImageSource()">
+        <ion-icon name="camera"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  
+    <ion-button  stype="button" expand="full" size="default" shape="round" color="primary" (click)="sendRemesa()">Generar</ion-button>
+  </div>
 
 </ion-content>

@@ -7,9 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { MenuPageRoutingModule } from './menu-routing.module';
 
 import { MenuPage } from './menu.page';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-
-
 
 @NgModule({
   imports: [
@@ -17,7 +14,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     FormsModule,
     IonicModule,
     MenuPageRoutingModule,
-    NgxDatatableModule,
     ReactiveFormsModule
   ],
   declarations: [MenuPage]

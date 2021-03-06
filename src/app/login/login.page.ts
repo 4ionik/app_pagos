@@ -10,6 +10,7 @@ import { AuthenticateService } from "../services/authenticate.service";
 import { Storage } from "@ionic/storage";
 import { ToastController } from '@ionic/angular';
 import { PostService } from '../services/post.service'
+import { EnvService } from '../services/env.service';
 
 interface Empresa {
   idempresa: number;
@@ -43,8 +44,11 @@ export class LoginPage implements OnInit {
   };
 
   errorMessage: string = "";
+  app_settigs = [];
+  app_url:string;
+  app_id = 0;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authservice: AuthenticateService, private storage: Storage, public toastCtrl: ToastController, private postPvdr: PostService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authservice: AuthenticateService, private storage: Storage, public toastCtrl: ToastController, private postPvdr: PostService, private env: EnvService) {
     this.loginForm = this.formBuilder.group({
       email: new FormControl(
         "",
@@ -61,6 +65,7 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    this.getLogoApp();
     this.doRefresh();
   }
 
@@ -91,6 +96,7 @@ export class LoginPage implements OnInit {
           if(data['success']){
             console.log('True');
             this.storage.set("isUserLoggedIn", true);
+            this.storage.set("LogoUrl", this.app_url);
             this.storage.set('session_storage', data['result']);
             this.router.navigate(['/menu/home']);
             const toast = await this.toastCtrl.create({
@@ -152,6 +158,27 @@ export class LoginPage implements OnInit {
   empresaChange($event){
     console.log($event.target.value);
     this.idempresa = $event.target.value;
+  }
+
+  getLogoApp(){
+    let body = {
+      aksi: 'logoApp'
+    }
+
+    this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
+      console.log(data);
+      if(data['success']){
+        this.app_settigs = data['result'];
+        if (this.app_settigs.length > 0) {
+          this.app_id = this.app_settigs[0]['idapp'];
+          this.app_url = this.env.API_URL+this.app_settigs[0]['url'];
+        }else{
+          this.app_id = 0;
+          this.app_url = this.env.API_URL+'IMG/logoApp.png';
+        }
+        console.log(this.app_settigs);
+      }
+    })
   }
 
 }
