@@ -7,6 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { MenuPageRoutingModule } from './menu-routing.module';
 
 import { MenuPage } from './menu.page';
+import { HomePage } from '../home/home.page';
+import { RemesasPage } from '../remesas/remesas.page';
+import { PagosPage } from '../pagos/pagos.page';
+import { OrdenesPage } from '../ordenes/ordenes.page';
 
 @NgModule({
   imports: [
@@ -16,6 +20,6 @@ import { MenuPage } from './menu.page';
     MenuPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [MenuPage]
+  declarations: [MenuPage,HomePage,RemesasPage,PagosPage,OrdenesPage]
 })
 export class MenuPageModule {}
