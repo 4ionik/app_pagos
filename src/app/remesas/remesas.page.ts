@@ -17,6 +17,7 @@ const { Camera } = Plugins;
 interface Viaticos{
   id_viatico : number;
   nombre_viatico: string;
+  montoV: number;
 }
 
 interface Banco{
@@ -42,10 +43,12 @@ export class RemesasPage implements OnInit {
   // idorden = 0;
   ordenes = [];
   ishidden = true;
+  ishidden_1 = true;
+  ishidden_2 = true;
 
   orden_remesa: [];
   select_orden: Orden[] = [];
-  selectedValues:string[] =[];
+  selectedValues = "0";
   idOrden : string;
   pagoOrden : string;
 
@@ -70,11 +73,18 @@ export class RemesasPage implements OnInit {
   box_price = 0;
   box_price_formatted= "$0";
 
+  box_price_a = 0;
+  box_price_formatted_a= "$0";
+
   idusuario: string;
   anggota: any;
   username:string;
   idrol = 0;
   idempresa = 0;
+  remesaTotal: string;
+  total_colectado: number;
+  viaticosTotal: number;
+  viaticosString:string;
 
   images: ApiImage[] = [];
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
@@ -87,7 +97,7 @@ export class RemesasPage implements OnInit {
     this.doRefresh();
     this.doRefreshBanco();
     this.doRefreshViaticos();
-    
+
     this.columns = [
       { name: 'Orden', prop: 'Orden' },
       { name: 'Cliente', prop: 'Cliente' },
@@ -115,7 +125,7 @@ export class RemesasPage implements OnInit {
 
   doRefresh(){
     let body = {
-      aksi: 'doRefreshOrdenRemesa'
+      aksi: 'doRefreshTipoTrans'
     }
 
     this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
@@ -125,7 +135,7 @@ export class RemesasPage implements OnInit {
         if (this.orden_remesa.length > 0) {
           for (let index = 0; index < this.orden_remesa.length; index++) {
             
-            this.select_orden[index] = <Orden>{id_orden: this.orden_remesa[index]['idorden'], nombre_orden: this.orden_remesa[index]['identifier_order']};
+            this.select_orden[index] = <Orden>{id_orden: this.orden_remesa[index]['idtipo_trans'], nombre_orden: this.orden_remesa[index]['nombre_transaccion']};
           }
         }else{
           
@@ -149,11 +159,11 @@ export class RemesasPage implements OnInit {
         if (this.viaticos.length > 0) {
           for (let index = 0; index < this.viaticos.length; index++) {
             
-            this.select_viat[index] = <Viaticos>{id_viatico: this.viaticos[index]['idviatico'], nombre_viatico: this.viaticos[index]['viatico']};
+            this.select_viat[index] = <Viaticos>{id_viatico: this.viaticos[index]['idviatico'], nombre_viatico: this.viaticos[index]['viatico'], montoV: this.viaticos[index]['monto']};
           }
         }else{
           
-          this.select_viat[0] = <Viaticos>{id_viatico: 0, nombre_viatico: 'No hay datos'};
+          this.select_viat[0] = <Viaticos>{id_viatico: 0, nombre_viatico: 'No hay datos', montoV: 0};
         }
         console.log(this.select_viat);
       }
@@ -188,15 +198,22 @@ export class RemesasPage implements OnInit {
 
   async doFilterPago (){
 
+    if (this.selectedValues == '0') {
+      this.ishidden = true;
+      this.ishidden_1 = true;
+      this.ishidden_2 = true;
+    }
+
+    if (this.selectedValues == '5') {
       let body = {
+        idOrden: this.selectedValues,
         idusuario: this.idusuario,
         idempresa: this.idempresa,
         aksi: 'doFilterPago'
       }
 
       this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-  // //     //   // console.log(data['result'].minLength);
-  // //     //   console.log(data);
+          //  console.log(data);
         if(data['success']){
           console.log('success');
           // console.log(data['result']);
@@ -204,8 +221,11 @@ export class RemesasPage implements OnInit {
           // console.log(this.rows );
           if (this.ordenes.length > 0) {
             this.rows = this.ordenes;
+            this.calculateTota(this.rows);
             console.log(this.rows);
             this.ishidden = false;
+            this.ishidden_1 = true;
+            this.ishidden_2 = true;
           }else{
             const toast = await this.toastCtrl.create({
               message: 'No existen pagos a remesar',
@@ -216,11 +236,19 @@ export class RemesasPage implements OnInit {
         }else{
           this.ishidden = true;
         }
-        // else{
-        //   console.log(data['result']);
-        // }
       })
-    // }
+    }
+
+    if (this.selectedValues == '6') {
+      this.ishidden = true;
+      this.ishidden_1 = false;
+      this.ishidden_2 = true;
+    }
+
+    if (this.selectedValues == '7') {
+      
+    }
+
   }
 
   async selectImageSource() {
@@ -328,67 +356,127 @@ export class RemesasPage implements OnInit {
       this.box_price_formatted = String(this.box_price);
   }
 
+  onChangePrice_a($event) {
+    this.box_price_a = $event.target.value.replace(/[^0-9.]/g, "");
+    if (this.box_price_a) {
+        this.box_price_formatted_a = this.getCurrency(this.box_price_a)
+        console.log("box_price_formatted: " + this.box_price_formatted_a);
+    }
+  }
+  onPriceUp_a($event){
+      this.box_price_a = $event.target.value.replace(/[^0-9.]/g, "");
+      this.box_price_formatted_a = String(this.box_price_a);
+  }
+
+  summaryVaticos(){
+    let totalReturn = 0;
+    var string_ = [];
+    for (let index = 0; index < this.selectedViaticos.length; index++) {
+      // const element = this.selectedViaticos[index]['monto'];
+      totalReturn = totalReturn + parseInt(this.selectedViaticos[index]['monto']);
+      string_.push(this.selectedViaticos[index]['value']);
+      // console.log(this.selectedViaticos[index]['monto']);
+    }
+    this.viaticosTotal = totalReturn;
+    this.viaticosString = string_.join(',');
+
+    console.log(this.viaticosTotal);
+  }
+
+  calculateTota(items){
+    // this.remesaTotal = 0;
+    let totalReturn = 0;
+    for(let i = 0; i< items.length; i++){
+      totalReturn = totalReturn + items[i]['Monto'];    
+    }
+    this.total_colectado = totalReturn;
+    this.remesaTotal = this.getCurrency(totalReturn);
+    this.box_price_formatted_a = this.getCurrency(totalReturn)
+    return this.remesaTotal;
+  }
+
   async sendRemesa(){
 
-    if (this.isTakePhoto) {
+    if (this.selectedValues == '0') {
+      
+    }
 
-      let body = {
-        idOrden: this.selectedValues.toString(),
-        idbanco: this.selectedBanco,
-        idviatico: this.selectedViaticos.toString(),
-        image: this.images[0].name,
-        montoViatico: this.box_price,
-        aksi: 'addRemesas'
-      }
+    if (this.selectedValues == '5') {
+      if (this.isTakePhoto) {
 
-      if (this.selectedBanco == "0") {
-        const toast = await this.toastCtrl.create({
-          message: 'Debe elegir una cuenta de banco para poder continuar',
-          duration: 2000
-        });
-        toast.present();
-        return false;
-      }
-
-      if (this.box_price > 0 && this.selectedViaticos.length == 0) {
-        const toast = await this.toastCtrl.create({
-          message: 'Debe elegir una opcion del listado de viaticos',
-          duration: 2000
-        });
-        toast.present();
-        return false;
-      }
-
-      this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-        console.log(data);
-        if(data['success']){
-          console.log('success');
-          console.log(data['result']);
-
-          const toast = await this.toastCtrl.create({
-            message: 'Las ordenes con el ID: '+ this.selectedValues.toString()+ ' fueron remesadas con exito',
-            duration: 2000
-          });
-          toast.present();
-          this.isTakePhoto = false;
-          this.clearData();
-        }else{
-          const toast = await this.toastCtrl.create({
-            message: 'Problemas al remesar las ordenes con el ID: '+ this.selectedValues.toString(),
-            duration: 2000
-          });
-          toast.present();
+        let body = {
+          tiptrans: this.selectedValues,
+          idbanco: this.selectedBanco,
+          idusuario: this.idusuario,
+          idviatico: this.viaticosString.toString(),
+          image: this.images[0].name,
+          montoViatico: this.viaticosTotal,
+          viaticosTotal: this.viaticosTotal,
+          total_colectado: this.total_colectado,
+          aksi: 'addRemesas'
         }
   
-      })
-
-    }else{
-      const toast = await this.toastCtrl.create({
-        message: 'Debe agregar una foto para poder remesar ',
-        duration: 2000
-      });
-      toast.present();
+        console.log(body.viaticosTotal);
+  
+        if (this.selectedBanco == "0") {
+          const toast = await this.toastCtrl.create({
+            message: 'Debe elegir una cuenta de banco para poder continuar',
+            duration: 2000
+          });
+          toast.present();
+          return false;
+        }
+  
+        if (this.box_price > 0 && this.selectedViaticos.length == 0) {
+          const toast = await this.toastCtrl.create({
+            message: 'Debe elegir una opcion del listado de viaticos',
+            duration: 2000
+          });
+          toast.present();
+          return false;
+        }
+  
+        this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
+          console.log(data);
+          if(data['success']){
+            console.log('success');
+            console.log(data['result']);
+  
+            const toast = await this.toastCtrl.create({
+              message: 'Las ordenes con el ID: '+ this.selectedValues+ ' fueron remesadas con exito',
+              duration: 2000
+            });
+            toast.present();
+            this.isTakePhoto = false;
+            this.clearData();
+          }else{
+            const toast = await this.toastCtrl.create({
+              message: 'Problemas al remesar las ordenes con el ID: '+ this.selectedValues,
+              duration: 2000
+            });
+            toast.present();
+          }
+    
+        })
+  
+      }else{
+        const toast = await this.toastCtrl.create({
+          message: 'Debe agregar una foto para poder remesar ',
+          duration: 2000
+        });
+        toast.present();
+      }
     }
+
+    if (this.selectedValues == '6') {
+      
+    }
+
+    if (this.selectedValues == '7') {
+
+    }
+
+    
 
 
   }
@@ -414,7 +502,7 @@ export class RemesasPage implements OnInit {
   }
 
   clearData(){
-    this.selectedValues = [];
+    this.selectedValues = "0";
     this.selectedBanco = "0";
     this.selectedViaticos = [];
     this.box_price_formatted = this.getCurrency(0);
