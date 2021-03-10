@@ -145,6 +145,7 @@
   </div>
 
   <div [hidden]=ishidden_1>
+
     <ion-card>
       <!-- <ion-card-header>
         <ion-card-title>Seleccionar Viaticos</ion-card-title>
@@ -152,12 +153,25 @@
       <ion-card-content>
         <ion-item>
           <ion-label position="floating">Total Colectado</ion-label>
-          <ion-input type="string" elastic [(ngModel)]="this.box_price_formatted_a" name="box_price_formatted_a" (change)='onChangePrice_a($event)' (keyup)="onPriceUp_a($event)"></ion-input>
+          <ion-input type="string" elastic [(ngModel)]="this.box_price_formatted_a" name="box_price_formatted_a" (change)='onChangePrice_a($event)' (keyup)="onPriceUp_a($event)" disabled></ion-input>
         </ion-item>
       </ion-card-content>
       
     </ion-card>
 
+    <ion-card>
+      <!-- <ion-card-header>
+        <ion-card-title>Seleccionar Viaticos</ion-card-title>
+      </ion-card-header> -->
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Efectivo Disponible</ion-label>
+          <ion-input type="string" elastic [(ngModel)]="this.box_price_formatted_b" name="box_price_formatted_a" (change)='onChangePrice_b($event)' (keyup)="onPriceUp_b($event)"></ion-input>
+        </ion-item>
+      </ion-card-content>
+      
+    </ion-card>
+  
     <ion-card>
       <ion-card-header>
         <ion-card-title>Seleccionar Viaticos</ion-card-title>
@@ -165,8 +179,8 @@
       <ion-card-content>
         <ion-item>
           <ion-label position="floating">Viaticos</ion-label>
-          <ion-select [(ngModel)] ="selectedViaticos" multiple="true" placeholder="Selecciona una opci&oacute;n" value="0" okText="Aceptar" cancelText="Cancelar">
-            <ion-select-option class="ion-text-wrap" *ngFor="let c of this.select_viat" [value]="c.id_viatico">{{c.nombre_viatico}}</ion-select-option>
+          <ion-select [(ngModel)] ="selectedViaticos" multiple="true" placeholder="Selecciona una opci&oacute;n" value="0" okText="Aceptar" cancelText="Cancelar" (ngModelChange)="summaryVaticos()">
+            <ion-select-option class="ion-text-wrap" *ngFor="let c of this.select_viat" [value]="{value: c.id_viatico, monto: c.montoV}">{{c.nombre_viatico}}</ion-select-option>
           </ion-select>
         </ion-item>
         <!-- <ion-item>
@@ -176,6 +190,40 @@
       </ion-card-content>
       
     </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Detalle Pagos</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+         <ion-row>
+          <ion-col size="2">Orden</ion-col>
+          <ion-col size="6">Cliente</ion-col>
+          <ion-col size="auto">Monto</ion-col>   
+         </ion-row>
+         <ion-row *ngFor="let r of rows; let isOdd=odd; let isEven=even" 
+         [class.Odd]="isOdd" 
+         [class.even]="isEven" >
+          <ion-col size="2" >{{r.Orden}}</ion-col>
+          <ion-col size="6"  >{{r.Cliente}}</ion-col>
+          <ion-col size="auto" text-center>{{r.Monto}}</ion-col>  
+         </ion-row>  
+         <ion-row>
+          <ion-col>
+            Total
+          </ion-col>
+          <ion-col>
+
+          </ion-col>
+          <ion-col>
+            {{remesaTotal}}
+          </ion-col>
+         </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-button  stype="button" expand="full" size="default" shape="round" color="primary" (click)="sendRemesa()">Generar</ion-button>
+
   </div>
 
 </ion-content>

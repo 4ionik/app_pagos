@@ -76,6 +76,9 @@ export class RemesasPage implements OnInit {
   box_price_a = 0;
   box_price_formatted_a= "$0";
 
+  box_price_b = 0;
+  box_price_formatted_b= "$0";
+
   idusuario: string;
   anggota: any;
   username:string;
@@ -240,9 +243,39 @@ export class RemesasPage implements OnInit {
     }
 
     if (this.selectedValues == '6') {
-      this.ishidden = true;
-      this.ishidden_1 = false;
-      this.ishidden_2 = true;
+
+      let body = {
+        idOrden: this.selectedValues,
+        idusuario: this.idusuario,
+        idempresa: this.idempresa,
+        aksi: 'doFilterPago'
+      }
+
+      this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
+          //  console.log(data);
+        if(data['success']){
+          console.log('success');
+          // console.log(data['result']);
+          this.ordenes = data['result'];
+          // console.log(this.rows );
+          if (this.ordenes.length > 0) {
+            this.rows = this.ordenes;
+            this.calculateTota(this.rows);
+            console.log(this.rows);
+            this.ishidden = true;
+            this.ishidden_1 = false;
+            this.ishidden_2 = true;
+          }else{
+            const toast = await this.toastCtrl.create({
+              message: 'No existen pagos a finiquitar',
+              duration: 2000
+            });
+            toast.present();
+          }
+        }else{
+          this.ishidden = true;
+        }
+      })
     }
 
     if (this.selectedValues == '7') {
@@ -368,6 +401,18 @@ export class RemesasPage implements OnInit {
       this.box_price_formatted_a = String(this.box_price_a);
   }
 
+  onChangePrice_b($event) {
+    this.box_price_b = $event.target.value.replace(/[^0-9.]/g, "");
+    if (this.box_price_b) {
+        this.box_price_formatted_b = this.getCurrency(this.box_price_b)
+        console.log("box_price_formatted: " + this.box_price_formatted_b);
+    }
+  }
+  onPriceUp_b($event){
+      this.box_price_b = $event.target.value.replace(/[^0-9.]/g, "");
+      this.box_price_formatted_b = String(this.box_price_b);
+  }
+
   summaryVaticos(){
     let totalReturn = 0;
     var string_ = [];
@@ -387,7 +432,7 @@ export class RemesasPage implements OnInit {
     // this.remesaTotal = 0;
     let totalReturn = 0;
     for(let i = 0; i< items.length; i++){
-      totalReturn = totalReturn + items[i]['Monto'];    
+      totalReturn = totalReturn + parseInt(items[i]['Monto']);    
     }
     this.total_colectado = totalReturn;
     this.remesaTotal = this.getCurrency(totalReturn);
@@ -427,7 +472,7 @@ export class RemesasPage implements OnInit {
           return false;
         }
   
-        if (this.box_price > 0 && this.selectedViaticos.length == 0) {
+        if (this.selectedViaticos.length == 0) {
           const toast = await this.toastCtrl.create({
             message: 'Debe elegir una opcion del listado de viaticos',
             duration: 2000
@@ -443,7 +488,7 @@ export class RemesasPage implements OnInit {
             console.log(data['result']);
   
             const toast = await this.toastCtrl.create({
-              message: 'Las ordenes con el ID: '+ this.selectedValues+ ' fueron remesadas con exito',
+              message: 'La remesa ha sido generada exitosamente',
               duration: 2000
             });
             toast.present();
@@ -451,7 +496,7 @@ export class RemesasPage implements OnInit {
             this.clearData();
           }else{
             const toast = await this.toastCtrl.create({
-              message: 'Problemas al remesar las ordenes con el ID: '+ this.selectedValues,
+              message: 'Problemas al generar la remesa',
               duration: 2000
             });
             toast.present();
@@ -469,7 +514,62 @@ export class RemesasPage implements OnInit {
     }
 
     if (this.selectedValues == '6') {
+
+      if (this.box_price_b == 0) {
+        const toast = await this.toastCtrl.create({
+          message: 'Debe ingresar el efectivo disponible para poder continuar',
+          duration: 2000
+        });
+        toast.present();
+        return false;
+      }
+
+      if (this.selectedViaticos.length == 0) {
+        const toast = await this.toastCtrl.create({
+          message: 'Debe elegir una opcion del listado de viaticos',
+          duration: 2000
+        });
+        toast.present();
+        return false;
+      }
       
+      let body = {
+        tiptrans: this.selectedValues,
+        // idbanco: this.selectedBanco,
+        idusuario: this.idusuario,
+        idviatico: this.viaticosString.toString(),
+        montoViatico: this.viaticosTotal,
+        viaticosTotal: this.viaticosTotal,
+        total_colectado: this.total_colectado,
+        efectivo_disp: this.box_price_b,
+        aksi: 'addRemesas'
+      }
+
+      console.log(body.viaticosTotal);
+
+      this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
+        console.log(data);
+        if(data['success']){
+          console.log('success');
+          console.log(data['result']);
+
+          const toast = await this.toastCtrl.create({
+            message: 'El Finiquito a ha sido generada exitosamente',
+            duration: 2000
+          });
+          toast.present();
+          this.isTakePhoto = false;
+          this.clearData();
+        }else{
+          const toast = await this.toastCtrl.create({
+            message: 'Problemas al generar el finiquito',
+            duration: 2000
+          });
+          toast.present();
+        }
+  
+      })
+
     }
 
     if (this.selectedValues == '7') {

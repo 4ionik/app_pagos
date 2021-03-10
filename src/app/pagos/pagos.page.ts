@@ -75,8 +75,10 @@ export class PagosPage implements OnInit {
             this.client = this.ordenes[0]['client'];
             this.cost = this.ordenes[0]['cost'];
             if (this.idTipoPago == 1) {
+              this.box_price = this.cost;
               this.box_price_formatted = this.getCurrency(this.cost);
             }else{
+              this.box_price = 0;
               this.box_price_formatted = this.getCurrency(0);
             }
             this.ishidden = false;
@@ -113,8 +115,10 @@ export class PagosPage implements OnInit {
         }
         console.log(this.select_pago);
         if (this.idTipoPago === 1) {
+          this.box_price = this.cost;
           this.box_price_formatted = this.getCurrency(this.cost)
         }else{
+          this.box_price = 0;
           this.box_price_formatted = this.getCurrency(0)
         }
       }
@@ -136,6 +140,7 @@ export class PagosPage implements OnInit {
         console.log("box_price_formatted: " + this.box_price_formatted);
     }
   }
+
   onPriceUp($event){
       this.box_price = $event.target.value.replace(/[^0-9.]/g, "");
       this.box_price_formatted = String(this.box_price);
@@ -144,8 +149,10 @@ export class PagosPage implements OnInit {
   tipoPagoChange($event){
     this.idTipoPago = $event.target.value;
     if (this.idTipoPago == 1) {
+      this.box_price = this.cost;
       this.box_price_formatted = this.getCurrency(this.cost)
     }else{
+      this.box_price = 0;
       this.box_price_formatted = this.getCurrency(0)
     }
   }
