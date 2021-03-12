@@ -41,6 +41,14 @@
       </ion-card-content>
       
     </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating"># Voucher:</ion-label>
+          <ion-input type="string" elastic [(ngModel)]="this.id_voucher" name="voucher"></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
 
     <ion-card>
       <ion-card-header>
@@ -166,7 +174,7 @@
       <ion-card-content>
         <ion-item>
           <ion-label position="floating">Efectivo Disponible</ion-label>
-          <ion-input type="string" elastic [(ngModel)]="this.box_price_formatted_b" name="box_price_formatted_a" (change)='onChangePrice_b($event)' (keyup)="onPriceUp_b($event)"></ion-input>
+          <ion-input type="string" elastic [(ngModel)]="this.box_price_formatted_b" name="box_price_formatted_b" (change)='onChangePrice_b($event)' (keyup)="onPriceUp_b($event)"></ion-input>
         </ion-item>
       </ion-card-content>
       
@@ -222,6 +230,115 @@
       </ion-card-content>
     </ion-card>
 
+    <ion-button  stype="button" expand="full" size="default" shape="round" color="primary" (click)="sendRemesa()">Generar</ion-button>
+
+  </div>
+
+  <!-- PAGO MIXTO -->
+
+  <div [hidden]=ishidden_2>
+     
+    <ion-card>
+      <!-- <ion-card-header>
+        <ion-card-title>Seleccionar Viaticos</ion-card-title>
+      </ion-card-header> -->
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Total Colectado</ion-label>
+          <ion-input type="string" elastic [(ngModel)]="this.box_price_formatted_a" name="box_price_formatted_a" (change)='onChangePrice_a($event)' (keyup)="onPriceUp_a($event)" disabled></ion-input>
+        </ion-item>
+      </ion-card-content>
+      
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Monto a Remesar:</ion-label>
+          <ion-input type="string" elastic [(ngModel)]="this.box_price_formatted_c" name="box_price_formatted_c" (change)='onChangePrice_c($event)' (keyup)="onPriceUp_c($event)"></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <!-- <ion-card-header>
+        <ion-card-title>Seleccionar Viaticos</ion-card-title>
+      </ion-card-header> -->
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Efectivo Disponible</ion-label>
+          <ion-input type="string" elastic [(ngModel)]="this.box_price_formatted_b" name="box_price_formatted_b" (change)='onChangePrice_b($event)' (keyup)="onPriceUp_b($event)"></ion-input>
+        </ion-item>
+      </ion-card-content>     
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating"># Voucher:</ion-label>
+          <ion-input type="string" elastic [(ngModel)]="this.id_voucher" name="voucher"></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Seleccionar Banco</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Banco</ion-label>
+          <ion-select [(ngModel)] ="selectedBanco" placeholder="Selecciona una opci&oacute;n" value="0" okText="Aceptar" cancelText="Cancelar">
+            <ion-select-option class="ion-text-wrap" *ngFor="let b of this.select_banco" [value]="b.id_banco">{{b.nombre_banco}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-card-content>
+    </ion-card> 
+  
+  
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Seleccionar Viaticos</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Viaticos</ion-label>
+          <ion-select [(ngModel)] ="selectedViaticos" multiple="true" placeholder="Selecciona una opci&oacute;n" value="0" okText="Aceptar" cancelText="Cancelar" (ngModelChange)="summaryVaticos()">
+            <ion-select-option class="ion-text-wrap" *ngFor="let c of this.select_viat" [value]="{value: c.id_viatico, monto: c.montoV}">{{c.nombre_viatico}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <!-- <ion-item>
+          <ion-label position="floating">Monto Total</ion-label>
+          <ion-input type="string" elastic [(ngModel)]="this.box_price_formatted" name="box_price_formatted" (change)='onChangePrice($event)' (keyup)="onPriceUp($event)"></ion-input>
+        </ion-item> -->
+      </ion-card-content>
+      
+    </ion-card>
+
+    
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col
+        size="6"
+        *ngFor="let img of images; let i = index;"
+        class="vertical-center">
+   
+        <img class="img-logo" [src]="this.URL_base + img.url"/>
+        <ion-fab vertical="bottom" horizontal="end">
+          <ion-fab-button
+            color="danger"
+            size="small"
+            (click)="deleteImage(img, i)"
+          >
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  
+    <ion-fab slot="fixed" color="primary" vertical="bottom" horizontal="end">
+      <ion-fab-button (click)="selectImageSource()">
+        <ion-icon name="camera"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  
     <ion-button  stype="button" expand="full" size="default" shape="round" color="primary" (click)="sendRemesa()">Generar</ion-button>
 
   </div>
