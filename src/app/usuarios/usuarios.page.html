@@ -1,12 +1,45 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Usuarios</ion-title>
+    <ion-title>List All Usuarios</ion-title>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
 
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Detail</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col >Id</ion-col>
+        <ion-col >UserName</ion-col>
+        <ion-col >Nombre</ion-col>   
+        <ion-col >Empresa</ion-col>
+        <ion-col >Actions</ion-col>
+       </ion-row>
+       <ion-row *ngFor="let r of rows; let isOdd=odd; let isEven=even" 
+       [class.Odd]="isOdd" 
+       [class.even]="isEven" >
+        <ion-col >{{r.user_id}}</ion-col>
+        <ion-col  >{{r.username}}</ion-col>
+        <ion-col text-center>{{r.nombre_usuario}}</ion-col> 
+        <ion-col  text-center>{{r.idempresa}}</ion-col> 
+        <ion-col text-center>
+          <ion-button color="warning" size="small" (click)="presentModal('update', r)">
+            <ion-icon name="create"></ion-icon>
+          </ion-button>
+          <ion-button color="danger" size="small" (click)="delete(r)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </ion-col> 
+      </ion-row>  
+    </ion-card-content>
+  </ion-card>
+  <ion-button (click)="presentModal('add', [])">
+    Add User
+  </ion-button>
 </ion-content>

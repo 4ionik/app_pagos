@@ -2,7 +2,7 @@
   <ion-menu contentId="content" side="start">
     <ion-header>
       <ion-toolbar>
-        <ion-title>Menu {{this.idrol}}</ion-title>
+        <ion-title>Menu</ion-title>
         <!-- <ion-buttons> -->
           <!-- <ion-button icon-only (click)="closeMenu()"> -->
           <!-- <ion-button icon-only >
@@ -13,39 +13,62 @@
     </ion-header>
     <ion-content>     
       <div *ngIf="isAdmin; else conditionFalse">
-        <ion-list>
+        <!-- <ion-list>
           <ion-menu-toggle autoHide="false" *ngFor="let p of pages">
             <ion-item [routerLink] = "p.url" routerDirection="root" [class.active-item]="selectedPath === p.url"> 
               {{p.tittle}}
             </ion-item>
           </ion-menu-toggle>
-        </ion-list>
+        </ion-list> -->
+        <div *ngFor="let pa of pages">
+          <ion-menu-toggle *ngIf="pa.url">
+            <ion-item [routerLink] = "pa.url" routerDirection="root" routerLinkActive="active" [class.active-item]="selectedPath === pa.url"> 
+              <ion-icon slot="start" [name]="pa.icon"></ion-icon>
+              <ion-label>{{pa.tittle}}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <!-- <ion-item button *ngIf="pa.subPages?.length>0" (click)="pa.open = !pa.open"
+            [class.active-parent]="pa.open" detail="false">
+            <ion-icon slot="start" name="arrow-forward" *ngIf="!pa.open"></ion-icon>
+            <ion-icon slot="start" name="arrow-down" *ngIf="pa.open"></ion-icon>
+            <ion-label>{{pa.tittle}}</ion-label>
+          </ion-item>
+          <ion-list *ngIf="pa.open">
+            <ion-menu-toggle>
+              <ion-item *ngFor="let s of pa.subPages" [routerLink] = "s.url" routerDirection="root" routerLinkActive="active" [class.active-item]="selectedPath === s.url"> 
+                <ion-icon slot="start" [name]="s.icon"></ion-icon>
+                <ion-label>{{s.tittle}}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list> -->
+        </div>
+
       </div>   
       <ng-template #conditionFalse>
+
         <div *ngFor="let pa of pagesAdmin">
           <ion-menu-toggle *ngIf="pa.url">
-            <ion-item [routerLink] = "pa.url" routerDirection="root" [class.active-item]="selectedPath === pa.url"> 
-              {{pa.tittle}}
+            <ion-item [routerLink] = "pa.url" routerDirection="root" routerLinkActive="active" [class.active-item]="selectedPath === pa.url"> 
+              <ion-icon slot="start" [name]="pa.icon"></ion-icon>
+              <ion-label>{{pa.tittle}}</ion-label>
             </ion-item>
           </ion-menu-toggle>
-          <ion-item button *ngIf="pa.subPages?.length>0">
-
+          <ion-item button *ngIf="pa.subPages?.length>0" (click)="pa.open = !pa.open"
+            [class.active-parent]="pa.open" detail="false">
+            <ion-icon slot="start" name="arrow-forward" *ngIf="!pa.open"></ion-icon>
+            <ion-icon slot="start" name="arrow-down" *ngIf="pa.open"></ion-icon>
+            <ion-label>{{pa.tittle}}</ion-label>
           </ion-item>
+          <ion-list *ngIf="pa.open">
+            <ion-menu-toggle>
+              <ion-item *ngFor="let s of pa.subPages" [routerLink] = "s.url" routerDirection="root" routerLinkActive="active" [class.active-item]="selectedPath === s.url"> 
+                <ion-icon slot="start" [name]="s.icon"></ion-icon>
+                <ion-label>{{s.tittle}}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
         </div>
-        <!-- <ion-list>
-          <ion-menu-toggle autoHide="false" *ngFor="let pa of pagesAdmin">
-            <ion-item [routerLink] = "pa.url" routerDirection="root" [class.active-item]="selectedPath === pa.url"> 
-              {{pa.tittle}}
-            </ion-item>
-            <ion-list>
-              <ion-menu-toggle autoHide="false" *ngFor="let s of pa.subPages">
-                <ion-item [routerLink] = "s.url" routerDirection="root" [class.active-item]="selectedPath === s.url"> 
-                  {{s.tittle}}
-                </ion-item>
-              </ion-menu-toggle>
-            </ion-list>
-          </ion-menu-toggle>
-        </ion-list> -->
+
       </ng-template>
     </ion-content>
     <ion-footer class="bar-stable">

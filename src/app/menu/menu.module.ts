@@ -11,6 +11,11 @@ import { HomePage } from '../home/home.page';
 import { RemesasPage } from '../remesas/remesas.page';
 import { PagosPage } from '../pagos/pagos.page';
 import { OrdenesPage } from '../ordenes/ordenes.page';
+import { UsuariosPage } from '../usuarios/usuarios.page';
+import { EmpresasPage } from '../empresas/empresas.page';
+import { TipoPagoPage } from '../tipo-pago/tipo-pago.page';
+
+import { UserModalComponent } from '../user-modal/user-modal.component';
 
 @NgModule({
   imports: [
@@ -20,6 +25,7 @@ import { OrdenesPage } from '../ordenes/ordenes.page';
     MenuPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [MenuPage,HomePage,RemesasPage,PagosPage,OrdenesPage]
+  declarations: [MenuPage,HomePage,RemesasPage,PagosPage,OrdenesPage, UsuariosPage, EmpresasPage, TipoPagoPage, UserModalComponent],
+  entryComponents: [UserModalComponent]
 })
 export class MenuPageModule {}

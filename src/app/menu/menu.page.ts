@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterEvent } from '@angular/router';
+import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { Storage } from "@ionic/storage";
 import { ToastController } from '@ionic/angular';
 
@@ -13,49 +13,60 @@ export class MenuPage implements OnInit {
   public pages = [
     {
       tittle: 'Home',
-      url: 'home'
+      url: '/menu/home',
+      icon: 'cube'
     },
     {
       tittle: 'Pagos',
-      url: 'pagos'
+      url: '/menu/pagos',
+      icon: 'add'
     },
     {
       tittle: 'Remesas',
-      url: 'remesas'
+      url: '/menu/remesas',
+      icon: 'archive'
     }
   ];
 
   public pagesAdmin = [
     {
       tittle: 'Home',
-      url: 'home'
+      url: '/menu/home',
+      icon: 'cube'
     },
     {
       tittle: 'Pagos',
-      url: 'pagos'
+      url: '/menu/pagos',
+      icon: 'add'
     },
     {
       tittle: 'Remesas',
-      url: 'remesas'
+      url: '/menu/remesas',
+      icon: 'archive'
     },
     {
       tittle: 'Mantenimiento',
+      // url: '/menu/mantenimiento',
       subPages: [
         { 
           tittle: 'Usuarios', 
-          url: 'usuarios' 
+          url: '/menu/usuarios',
+          icon: 'person-add'
         },
         { 
           tittle: 'Empresas', 
-          url: 'empresas' 
+          url: '/menu/empresas',
+          icon: 'podium'
         },
         { 
           tittle: 'Tipos de pago', 
-          url: 'tipo-pago' 
+          url: '/menu/tipo-pago',
+          icon: 'shuffle'
         },
         { 
           tittle: 'Ordenes', 
-          url: 'ordenes' 
+          url: '/menu/ordenes',
+          icon: 'pricetag'
         }
       ]
     }
@@ -70,13 +81,19 @@ export class MenuPage implements OnInit {
   idempresa = 0;
   isAdmin = true;
 
+  showSubmenu: boolean = false;
+  textSelected = "Mantenimiento";
+
   constructor(private router: Router, private storage: Storage, public toastCtrl: ToastController) {
     this.router.events.subscribe((event: RouterEvent) =>{
       this.selectedPath = event.url;
+      
     });
+    console.log(this.selectedPath);
   }
 
   ionViewWillEnter(){
+
     this.storage.get('session_storage').then((res)=>{
       console.log(res);
       this.anggota = res;
@@ -84,13 +101,15 @@ export class MenuPage implements OnInit {
       this.idusuario = this.anggota.user_id;
       this.idrol = this.anggota.idrol;
       this.idempresa = this.anggota.idempresa;
+
+      console.log(this.idrol);
+      if (this.idrol==1) {
+        this.isAdmin = true;
+      }else{
+        this.isAdmin = false;
+      }
     });
-    if (this.idrol==1) {
-      this.isAdmin = false;
-    }else{
-      this.isAdmin = true;
-    }
-    console.log(this.isAdmin);
+        
   }
 
   ngOnInit() {
@@ -105,6 +124,10 @@ export class MenuPage implements OnInit {
         duration: 3000
       });
     toast.present();
+  }
+
+  menuItemHandler(): void {
+    this.showSubmenu = !this.showSubmenu;
   }
 
 }

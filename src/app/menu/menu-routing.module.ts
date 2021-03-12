@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { HomePage } from '../home/home.page';
 import { PagosPage } from '../pagos/pagos.page';
 import { RemesasPage } from '../remesas/remesas.page';
+import { MantenimientoPage } from '../mantenimiento/mantenimiento.page';
 import { UsuariosPage } from '../usuarios/usuarios.page';
 import { EmpresasPage } from '../empresas/empresas.page';
 import { TipoPagoPage } from '../tipo-pago/tipo-pago.page';
@@ -35,6 +36,14 @@ const routes: Routes = [
     children: [{
       path: 'remesas',
       component: RemesasPage
+    }]
+  },
+  {
+    path: '',
+    component: MenuPage,
+    children: [{
+      path: 'mantenimiento',
+      component: MantenimientoPage
     }]
   },
   {
