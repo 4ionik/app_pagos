@@ -67,6 +67,11 @@ export class MenuPage implements OnInit {
           tittle: 'Ordenes', 
           url: '/menu/ordenes',
           icon: 'pricetag'
+        },
+        { 
+          tittle: 'Bancos', 
+          url: '/menu/bancos',
+          icon: 'pricetag'
         }
       ]
     }

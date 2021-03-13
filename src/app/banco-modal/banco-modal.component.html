@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Banco Tool</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="!isUpdate; else conditionFalse">
+
+    <ion-item>
+      <ion-label position="stacked">Banco:</ion-label>
+      <ion-input [(ngModel)]="banco" placeholder="Banco"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Cuenta:</ion-label>
+      <ion-input [(ngModel)]="cuenta" placeholder="Cuenta"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-button (click)="submitForm('add')">Add</ion-button>
+    </ion-item>
+
+  </div>
+  <ng-template #conditionFalse>
+    <ion-item>
+      <ion-label position="stacked">ID</ion-label>
+      <ion-input [(ngModel)]="idbanco" placeholder="idBanco" disabled></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Banco</ion-label>
+      <ion-input [(ngModel)]="banco" placeholder="Banco"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Cuenta</ion-label>
+      <ion-input [(ngModel)]="cuenta" placeholder="Cuenta"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-button (click)="submitForm('update')">Update</ion-button>
+    </ion-item>
+  </ng-template>
+</ion-content>

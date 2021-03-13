@@ -12,6 +12,7 @@ import { TipoPagoPage } from '../tipo-pago/tipo-pago.page';
 import { OrdenesPage } from '../ordenes/ordenes.page';
 
 import { MenuPage } from './menu.page';
+import { BancosPage } from '../bancos/bancos.page';
 
 const routes: Routes = [
   {
@@ -76,6 +77,14 @@ const routes: Routes = [
     children: [{
       path: 'ordenes',
       component: OrdenesPage
+    }]
+  },
+  {
+    path: '',
+    component: MenuPage,
+    children: [{
+      path: 'bancos',
+      component: BancosPage
     }]
   }
 ];
