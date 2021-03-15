@@ -36,7 +36,7 @@ import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
     MenuPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [MenuPage,HomePage,RemesasPage,PagosPage,OrdenesPage, UsuariosPage, EmpresasPage, TipoPagoPage, UserModalComponent],
-  entryComponents: [UserModalComponent]
+  declarations: [MenuPage,HomePage,RemesasPage,PagosPage,OrdenesPage, UsuariosPage, EmpresasPage, TipoPagoPage, ViaticosPage, ReportesPage, AppConfPage, UserModalComponent, ViaticosModalComponent, ReportModalComponent, UserModalComponent,EmpresaModalComponent,BancosPage,BancoModalComponent],
+  entryComponents: [UserModalComponent,EmpresaModalComponent,BancoModalComponent, ViaticosModalComponent, ReportModalComponent]
 })
 export class MenuPageModule {}
