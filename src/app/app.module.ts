@@ -29,7 +29,7 @@ import { CalendarModule } from 'ion2-calendar';
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     PostService,
-    CurrencyPipe
+    CurrencyPipe,
   ],
   bootstrap: [AppComponent]
 })

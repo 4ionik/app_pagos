@@ -10,6 +10,9 @@ import { UsuariosPage } from '../usuarios/usuarios.page';
 import { EmpresasPage } from '../empresas/empresas.page';
 import { TipoPagoPage } from '../tipo-pago/tipo-pago.page';
 import { OrdenesPage } from '../ordenes/ordenes.page';
+import { ViaticosPage } from '../viaticos/viaticos.page';
+import { ReportesPage } from '../reportes/reportes.page';
+import { AppConfPage } from '../app-conf/app-conf.page';
 
 import { MenuPage } from './menu.page';
 import { BancosPage } from '../bancos/bancos.page';
@@ -91,9 +94,33 @@ const routes: Routes = [
   {
     path: '',
     component: MenuPage,
-    children: [{
       path: 'buscar-remesas',
+    children: [{
       component: BuscarRemesasPage
+    }]
+  },
+  {
+    path: '',
+    component: MenuPage,
+    children: [{
+      path: 'viaticos',
+    }]
+      component: ViaticosPage
+  },
+  {
+    path: '',
+    component: MenuPage,
+    children: [{
+      path: 'reportes',
+      component: ReportesPage
+    }]
+  },
+  {
+    component: MenuPage,
+    path: '',
+    children: [{
+      path: 'app-conf',
+      component: AppConfPage
     }]
   }
 ];

@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Viaticos Tool</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div *ngIf="!isUpdate; else conditionFalse">
+    <ion-item>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input [(ngModel)]="nombre" placeholder="Nombre Viaticos"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="stacked">Monto</ion-label>
+      <ion-input type="number" [(ngModel)]="monto" placeholder="Monto"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-button (click)="submitForm('add')">Add</ion-button>
+    </ion-item>
+  </div>
+  <ng-template #conditionFalse>
+
+    <ion-item>
+      <ion-label position="stacked">ID</ion-label>
+      <ion-input [(ngModel)]="id" placeholder="ID" disabled></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input [(ngModel)]="nombre" placeholder="Nombre Viaticos"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label position="stacked">Monto</ion-label>
+      <ion-input type="number" [(ngModel)]="monto" placeholder="Monto"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Estatus</ion-label>
+      <ion-select placeholder="Selecciona una opci&oacute;n" value="1" okText="Aceptar" cancelText="Cancelar" [(ngModel)]="estatus">
+        <ion-select-option [value]="1">Activo</ion-select-option>
+        <ion-select-option [value]="2">Inactivo</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-button (click)="submitForm('update')">Update</ion-button>
+    </ion-item>
+  </ng-template>
+</ion-content>

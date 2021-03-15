@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>App Settings</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="sign_in_page_wrap">
+    <div class="login_content">
+      <ion-card>
+        <ion-card-content>
+          <h1 class="ion-text-center">
+            <img [src]="app_url" />
+          </h1>
+        </ion-card-content>
+      </ion-card>
+
+      <input type="file" name="Icon Uploader" id="txtFileUpload" (change)="uploadListener($event)" accept=".png, .jpg, .jpeg" />
+
+      <!-- <ion-button
+        [disabled]="!username || !password"
+        expand="block"
+        color="primary"
+        >Actualizar</ion-button> -->
+
+    </div>
+  </div>
+</ion-content>

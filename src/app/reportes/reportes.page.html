@@ -1,0 +1,197 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Reportes</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Selecciona el rango de fechas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label>Desde</ion-label>
+            <ion-input readonly [(ngModel)]="selectedDate" (click)="openDatePicker()"> </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label>Hasta</ion-label>
+            <ion-input readonly [(ngModel)]="selectedDateHasta" (click)="openDatePickerHasta()"> </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Selecciona el reporte</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="4">
+          <ion-button (click)="presentModal(1)" expand="block" fill="clear" shape="round" color="primary">
+            Cobros
+          </ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button (click)="presentModal(2)" expand="block" fill="clear" shape="round" color="primary">
+            Remesas
+          </ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button (click)="presentModal(3)" expand="block" fill="clear" shape="round" color="primary">
+            Pendientes de remesar
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <!-- <ion-row>
+        <ion-col size="4"></ion-col>
+        <ion-col size="4">
+          
+        </ion-col>
+        <ion-col size="4"></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4"></ion-col>
+        <ion-col size="4">
+          
+        </ion-col>
+        <ion-col size="4"></ion-col>
+      </ion-row> -->
+    </ion-card-content>
+  </ion-card>
+  <div *ngIf="typeReport==1 && isHidden == false">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Detalle {{this.typeReport}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col size="6"></ion-col>
+          <ion-col size="3"></ion-col>
+          <ion-col size="3">
+            <ion-button color="success" expand="block" (click)="exportToExcel('Remesas')">Export to Excel</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col >Id Pago</ion-col>
+          <ion-col >Orden</ion-col>   
+          <ion-col >Usuario</ion-col>
+          <ion-col >Tipo Pago</ion-col>
+          <ion-col >Monto Pago</ion-col>
+          <ion-col >Total Orden</ion-col>
+          <ion-col >Tipo Transacci&oacute;n</ion-col>
+          <ion-col >Fecha Pago</ion-col>
+         </ion-row>
+         <div class="scroll-element"> 
+          <ion-row *ngFor="let r of rows; let isOdd=odd; let isEven=even" 
+                    [class.Odd]="isOdd" 
+                    [class.even]="isEven" >
+            <ion-col >{{r.idpago}}</ion-col>
+            <ion-col >{{r.orden}}</ion-col> 
+            <ion-col >{{r.usuario}}</ion-col>
+            <ion-col >{{r.tipo_pago}}</ion-col> 
+            <ion-col >{{r.monto_pago}}</ion-col>
+            <ion-col >{{r.costo_total_orden}}</ion-col> 
+            <ion-col >{{r.tipo_transaccion}}</ion-col> 
+            <ion-col >{{r.created}}</ion-col> 
+          </ion-row>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div *ngIf="typeReport==2 && isHidden == false">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Detalle {{this.typeReport}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col size="6"></ion-col>
+          <ion-col size="3"></ion-col>
+          <ion-col size="3">
+            <ion-button color="success" expand="block" (click)="exportToExcel('Remesas')">Export to Excel</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col >Id Remesa</ion-col>
+          <ion-col >Orden</ion-col>   
+          <ion-col >Banco</ion-col>
+          <ion-col >Transacci&oacute;n</ion-col>
+          <ion-col >Remesado</ion-col>
+          <ion-col >Pendiente de remesar</ion-col>
+          <ion-col >Total Colectado</ion-col>
+          <ion-col >Efectivo Disponible</ion-col>
+          <ion-col >Total Viaticos</ion-col>
+          <ion-col >Voucher</ion-col>
+          <ion-col >Fecha Remesa</ion-col>
+         </ion-row>
+         <div class="scroll-element"> 
+          <ion-row *ngFor="let r of rows; let isOdd=odd; let isEven=even" 
+                    [class.Odd]="isOdd" 
+                    [class.even]="isEven" >
+            <ion-col >{{r.idremesas}}</ion-col>
+            <ion-col >{{r.orden}}</ion-col> 
+            <ion-col >{{r.banco}}</ion-col>
+            <ion-col >{{r.nombre_transaccion}}</ion-col> 
+            <ion-col >{{r.monto_remesado}}</ion-col>
+            <ion-col >{{r.pendiente_remesa}}</ion-col> 
+            <ion-col >{{r.total_colectado}}</ion-col> 
+            <ion-col >{{r.efectivo_disponible}}</ion-col> 
+            <ion-col >{{r.total_viaticos}}</ion-col> 
+            <ion-col >{{r.voucher}}</ion-col> 
+            <ion-col >{{r.fecha_remesa}}</ion-col> 
+          </ion-row>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div *ngIf="typeReport==3 && isHidden == false">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Detalle {{this.typeReport}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col size="6"></ion-col>
+          <ion-col size="3"></ion-col>
+          <ion-col size="3">
+            <ion-button color="success" expand="block" (click)="exportToExcel('Remesas')">Export to Excel</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col >Id Pago</ion-col>
+          <ion-col >Orden</ion-col>   
+          <ion-col >Usuario</ion-col>
+          <ion-col >Tipo Pago</ion-col>
+          <ion-col >Monto Pago</ion-col>
+          <ion-col >Total Orden</ion-col>
+          <ion-col >Tipo Transacci&oacute;n</ion-col>
+          <ion-col >Fecha Pago</ion-col>
+         </ion-row>
+         <div class="scroll-element"> 
+          <ion-row *ngFor="let r of rows; let isOdd=odd; let isEven=even" 
+                    [class.Odd]="isOdd" 
+                    [class.even]="isEven" >
+            <ion-col >{{r.idpago}}</ion-col>
+            <ion-col >{{r.orden}}</ion-col> 
+            <ion-col >{{r.usuario}}</ion-col>
+            <ion-col >{{r.tipo_pago}}</ion-col> 
+            <ion-col >{{r.monto_pago}}</ion-col>
+            <ion-col >{{r.costo_total_orden}}</ion-col> 
+            <ion-col >{{r.tipo_transaccion}}</ion-col> 
+            <ion-col >{{r.created}}</ion-col> 
+          </ion-row>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

@@ -3,14 +3,14 @@ import { Storage } from '@ionic/storage';
 import { EnvService } from '../services/env.service';
 import { PostService } from '../services/post.service';
 import { ToastController, Platform, ModalController} from '@ionic/angular';
-import { UserModalComponent } from '../user-modal/user-modal.component';
+import { ViaticosModalComponent } from '../viaticos-modal/viaticos-modal.component';
 
 @Component({
-  selector: 'app-usuarios',
-  templateUrl: './usuarios.page.html',
-  styleUrls: ['./usuarios.page.scss'],
+  selector: 'app-viaticos',
+  templateUrl: './viaticos.page.html',
+  styleUrls: ['./viaticos.page.scss'],
 })
-export class UsuariosPage implements OnInit {
+export class ViaticosPage implements OnInit {
 
   usuarios = [];
   public rows: any;
@@ -23,7 +23,6 @@ export class UsuariosPage implements OnInit {
 
   constructor(public toastCtrl: ToastController, private postPvdr: PostService, private storage: Storage,
     private env: EnvService, private modalController: ModalController) { }
-
 
   ionViewWillEnter(){
     this.storage.get('session_storage').then((res)=>{
@@ -48,7 +47,7 @@ export class UsuariosPage implements OnInit {
       idusuario: this.idusuario,
       idempresa: this.idempresa,
       idrol: this.idrol,
-      aksi: 'getUsuarios'
+      aksi: 'getViaticos'
     }
 
     this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
@@ -63,14 +62,14 @@ export class UsuariosPage implements OnInit {
 
         }else{
           const toast = await this.toastCtrl.create({
-            message: 'No existen usuarios a mostrar',
+            message: 'No existen viaticos a mostrar',
             duration: 2000
           });
           toast.present();
         }
       }else{
         const toast = await this.toastCtrl.create({
-          message: 'Problemas al cargar el listado de usuarios',
+          message: 'Problemas al cargar el listado de viaticos',
           duration: 2000
         });
         toast.present();
@@ -82,7 +81,7 @@ export class UsuariosPage implements OnInit {
 
     if (action == 'add') {
       const modal = await this.modalController.create({
-        component: UserModalComponent,
+        component: ViaticosModalComponent,
         cssClass: 'my-custom-class',
         componentProps: {
           isUpdate: false,
@@ -98,7 +97,7 @@ export class UsuariosPage implements OnInit {
       return await modal.present();
     }else{
       const modal = await this.modalController.create({
-        component: UserModalComponent,
+        component: ViaticosModalComponent,
         cssClass: 'my-custom-class',
         componentProps: {
           isUpdate: true,
@@ -118,9 +117,8 @@ export class UsuariosPage implements OnInit {
 
   delete(item){
     let body = {
-      idusuario: item.user_id,
-      idempresa: item.idempresa,
-      aksi: 'deleteUsuarios'
+      idviatico: item.idviatico,
+      aksi: 'deleteViaticos'
     }
 
     this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
@@ -128,7 +126,7 @@ export class UsuariosPage implements OnInit {
       if(data['success']){
         // console.log(data['result']);
         const toast = await this.toastCtrl.create({
-          message: 'Usuario Eliminado con exito',
+          message: 'Viatico Eliminado con exito',
           duration: 2000
         });
         toast.present();
@@ -136,7 +134,7 @@ export class UsuariosPage implements OnInit {
         this.doFilterPago();
       }else{
         const toast = await this.toastCtrl.create({
-          message: 'Problemas al eliminar el usuario',
+          message: 'Problemas al eliminar el Viatico',
           duration: 2000
         });
         toast.present();

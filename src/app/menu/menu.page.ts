@@ -45,6 +45,11 @@ export class MenuPage implements OnInit {
       icon: 'archive'
     },
     {
+      tittle: 'Reportes',
+      url: '/menu/reportes',
+      icon: 'browsers'
+    },
+    {
       tittle: 'Mantenimiento',
       // url: '/menu/mantenimiento',
       subPages: [
@@ -58,11 +63,11 @@ export class MenuPage implements OnInit {
           url: '/menu/empresas',
           icon: 'podium'
         },
-        { 
-          tittle: 'Tipos de pago', 
-          url: '/menu/tipo-pago',
-          icon: 'shuffle'
-        },
+        // { 
+        //   tittle: 'Tipos de pago', 
+        //   url: '/menu/tipo-pago',
+        //   icon: 'shuffle'
+        // },
         { 
           tittle: 'Ordenes', 
           url: '/menu/ordenes',
@@ -72,6 +77,17 @@ export class MenuPage implements OnInit {
           tittle: 'Bancos', 
           url: '/menu/bancos',
           icon: 'logo-usd'
+        },
+        { 
+          tittle: 'Viaticos', 
+          url: '/menu/viaticos',
+          icon: 'pricetag'
+        }
+        ,
+        { 
+          tittle: 'App Config', 
+          url: '/menu/app-conf',
+          icon: 'cog'
         }
       ]
     }

@@ -45,6 +45,19 @@ export class PostService {
 		return this.http.post(`${this.env.API_URL}proses-api.php`, formData).pipe(map((res: Response) => res ));
 	}
 
+	uploadImageApp(blobData, name, aksi) {
+		let type = "application/json; charset=UTF-8";
+		let headers = new HttpHeaders({ 'Content-Type': type });
+		let options =  {headers: headers };
+
+		const formData = new FormData();
+		formData.append('archivo', blobData, name);
+		formData.append('name', name);
+		formData.append('aksi', aksi);
+		
+		return this.http.post(`${this.env.API_URL}proses-api.php`, formData).pipe(map((res: Response) => res ));
+	}
+
 	uploadImageFile(file: File) {
 		const ext = file.name.split('.').pop();
 		const formData = new FormData();

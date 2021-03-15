@@ -14,22 +14,29 @@ import { OrdenesPage } from '../ordenes/ordenes.page';
 import { UsuariosPage } from '../usuarios/usuarios.page';
 import { EmpresasPage } from '../empresas/empresas.page';
 import { TipoPagoPage } from '../tipo-pago/tipo-pago.page';
+import { ViaticosPage } from '../viaticos/viaticos.page';
+import { ReportesPage } from '../reportes/reportes.page';
+import { AppConfPage } from '../app-conf/app-conf.page';
 
 import { UserModalComponent } from '../user-modal/user-modal.component';
 import { EmpresaModalComponent } from '../empresa-modal/empresa-modal.component';
 import { BancosPage } from '../bancos/bancos.page';
 import { BancoModalComponent } from '../banco-modal/banco-modal.component';
+import { ViaticosModalComponent } from '../viaticos-modal/viaticos-modal.component';
+import { ReportModalComponent } from '../report-modal/report-modal.component';
 
+import { Ionic4DatepickerModule } from '@logisticinfotech/ionic4-datepicker';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    Ionic4DatepickerModule,
     MenuPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [MenuPage,HomePage,RemesasPage,PagosPage,OrdenesPage, UsuariosPage, EmpresasPage, TipoPagoPage, UserModalComponent,EmpresaModalComponent,BancosPage,BancoModalComponent],
-  entryComponents: [UserModalComponent,EmpresaModalComponent,BancoModalComponent]
+  declarations: [MenuPage,HomePage,RemesasPage,PagosPage,OrdenesPage, UsuariosPage, EmpresasPage, TipoPagoPage, UserModalComponent],
+  entryComponents: [UserModalComponent]
 })
 export class MenuPageModule {}

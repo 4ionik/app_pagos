@@ -8,5 +8,68 @@
 </ion-header>
 
 <ion-content>
+  <ion-row>
+    <ion-col size="12" class="vertical-center">
+      <h3>File Chooser Demo</h3>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12" class="vertical-center">
+      <input type="file" #csvReader name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event)" accept=".csv" />
+    </ion-col>
+  </ion-row>
+  
+  <div *ngIf="records.length > 0">
+    <ion-row>
+      <ion-col size="12">
+        <table class="minimalistBlack">    
+          <thead>    
+            <tr>    
+              <th>order</th>
+              <th>latitud</th>
+              <th>longitud</th>
+              <th>from</th>
+              <th>to</th>
+              <th>cost</th>
+              <th>wight</th>
+              <th>volume</th>
+              <th>type</th>
+              <th>client</th>
+              <th>email</th>
+              <th>tag</th>
+            </tr>    
+          </thead>    
+          <tbody>    
+            <tr *ngFor="let record of records;let i = index;">    
+              <td> <span>{{record.order}}</span> </td>
+              <td> <span>{{record.latitud}}</span> </td>
+              <td> <span>{{record.longitud}}</span> </td>
+              <td> <span>{{record.from}}</span> </td>
+              <td> <span>{{record.to}}</span> </td>
+              <td> <span>{{record.cost}}</span> </td>
+              <td> <span>{{record.wight}}</span> </td>
+              <td> <span>{{record.volume}}</span> </td>
+              <td> <span>{{record.type}}</span> </td>
+              <td> <span>{{record.client}}</span> </td>
+              <td> <span>{{record.email}}</span> </td>
+              <td> <span>{{record.tag}}</span> </td>    
+            </tr>    
+          </tbody>    
+        </table>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button (click)="saveOrdenes()" expand="block" fill="clear" shape="round" color="primary">
+          Cargar Ordenes
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button (click)="fileReset()" expand="block" fill="clear" shape="round" color="danger">
+          Cancelar Cargar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
 
 </ion-content>
