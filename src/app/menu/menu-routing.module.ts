@@ -13,6 +13,7 @@ import { OrdenesPage } from '../ordenes/ordenes.page';
 
 import { MenuPage } from './menu.page';
 import { BancosPage } from '../bancos/bancos.page';
+import { BuscarRemesasPage } from '../buscar-remesas/buscar-remesas.page';
 
 const routes: Routes = [
   {
@@ -85,6 +86,14 @@ const routes: Routes = [
     children: [{
       path: 'bancos',
       component: BancosPage
+    }]
+  },
+  {
+    path: '',
+    component: MenuPage,
+    children: [{
+      path: 'buscar-remesas',
+      component: BuscarRemesasPage
     }]
   }
 ];

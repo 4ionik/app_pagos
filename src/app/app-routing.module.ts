@@ -16,10 +16,6 @@ const routes: Routes = [
     path: 'menu',
     loadChildren: () => import('./menu/menu.module').then( m => m.MenuPageModule),
     canActivate: [LoginGuard]
-  },
-  {
-    path: 'bancos',
-    loadChildren: () => import('./bancos/bancos.module').then( m => m.BancosPageModule)
   }
 ];
 

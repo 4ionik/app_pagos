@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { EnvService } from '../services/env.service';
 import { PostService } from '../services/post.service';
-import { ToastController, Platform, ModalController} from '@ionic/angular';
+import { ToastController, Platform, ModalController, AlertController} from '@ionic/angular';
 import { EmpresaModalComponent } from '../empresa-modal/empresa-modal.component';
 
 @Component({
@@ -22,7 +22,7 @@ export class EmpresasPage implements OnInit {
   public rows: any;
 
   constructor(public toastCtrl: ToastController, private postPvdr: PostService, private storage: Storage,
-    private env: EnvService, private modalController: ModalController) { }
+    private env: EnvService, private modalController: ModalController, public alertCtrl: AlertController) { }
 
 
     ionViewWillEnter(){
@@ -115,31 +115,54 @@ export class EmpresasPage implements OnInit {
     }
   }
 
-  delete(item){
-    let body = {
-      idempresa: item.idempresa,
-      aksi: 'deleteEmpresa'
-    }
+  async delete(item){
 
-    this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-      //  console.log(data);
-    if(data['success']){
-      // console.log(data['result']);
-      const toast = await this.toastCtrl.create({
-        message: 'Empresa Eliminada con exito',
-        duration: 2000
-      });
-      toast.present();
+ 
+      const alert = await this.alertCtrl.create({
+        cssClass: 'my-custom-class',
+        message: '<strong>¿Esta seguro de eliminar la empresa ' + item.nombre_empresa + ' ?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            }
+          }, {
+            text: 'Confirmar',
+            handler: () => {
+                 let body = {
+                  idempresa: item.idempresa,
+                  aksi: 'deleteEmpresa'
+                }
 
-      this.getEmpresas();
-    }else{
-      const toast = await this.toastCtrl.create({
-        message: 'Problemas al eliminar la empresa',
-        duration: 2000
+
+                this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
+                  //  console.log(data);
+                if(data['success']){
+                  // console.log(data['result']);
+                  const toast = await this.toastCtrl.create({
+                    message: 'Empresa Eliminada con exito',
+                    duration: 2000
+                  });
+                  toast.present();
+
+                  this.getEmpresas();
+                }else{
+                  const toast = await this.toastCtrl.create({
+                    message: 'Problemas al eliminar la empresa',
+                    duration: 2000
+                  });
+                  toast.present();
+                }
+              })
+            }
+          }
+        ]
       });
-      toast.present();
-    }
-  })
+  
+      await alert.present();
 
   }
 

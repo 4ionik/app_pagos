@@ -20,6 +20,7 @@ import { EmpresaModalComponent } from '../empresa-modal/empresa-modal.component'
 import { BancosPage } from '../bancos/bancos.page';
 import { BancoModalComponent } from '../banco-modal/banco-modal.component';
 
+
 @NgModule({
   imports: [
     CommonModule,

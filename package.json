@@ -13,8 +13,8 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "~11.2.0",
     "@angular/cli": "11.1.4",
+    "@angular/common": "~11.2.0",
     "@angular/core": "~11.2.0",
     "@angular/forms": "~11.2.0",
     "@angular/platform-browser": "~11.2.0",
@@ -29,6 +29,8 @@
     "@swimlane/ngx-datatable": "^19.0.0",
     "chart.js": "^2.9.4",
     "com-darryncampbell-cordova-plugin-intent": "^2.0.0",
+    "ion2-calendar": "^3.0.0-rc.0",
+    "moment": "^2.29.1",
     "ngx-currency": "^2.5.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

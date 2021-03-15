@@ -1,4 +1,4 @@
-<ion-split-pane contentId="content">
+<ion-split-pane contentId="content" side="start">
   <ion-menu contentId="content" side="start">
     <ion-header>
       <ion-toolbar>
@@ -21,7 +21,7 @@
           </ion-menu-toggle>
         </ion-list> -->
         <div *ngFor="let pa of pages">
-          <ion-menu-toggle *ngIf="pa.url">
+          <ion-menu-toggle *ngIf="pa.url" auto-hide="false">
             <ion-item [routerLink] = "pa.url" routerDirection="root" routerLinkActive="active" [class.active-item]="selectedPath === pa.url"> 
               <ion-icon slot="start" [name]="pa.icon"></ion-icon>
               <ion-label>{{pa.tittle}}</ion-label>
@@ -47,7 +47,7 @@
       <ng-template #conditionFalse>
 
         <div *ngFor="let pa of pagesAdmin">
-          <ion-menu-toggle *ngIf="pa.url">
+          <ion-menu-toggle *ngIf="pa.url" auto-hide="false">
             <ion-item [routerLink] = "pa.url" routerDirection="root" routerLinkActive="active" [class.active-item]="selectedPath === pa.url"> 
               <ion-icon slot="start" [name]="pa.icon"></ion-icon>
               <ion-label>{{pa.tittle}}</ion-label>
@@ -60,7 +60,7 @@
             <ion-label>{{pa.tittle}}</ion-label>
           </ion-item>
           <ion-list *ngIf="pa.open">
-            <ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false" >
               <ion-item *ngFor="let s of pa.subPages" [routerLink] = "s.url" routerDirection="root" routerLinkActive="active" [class.active-item]="selectedPath === s.url"> 
                 <ion-icon slot="start" [name]="s.icon"></ion-icon>
                 <ion-label>{{s.tittle}}</ion-label>
