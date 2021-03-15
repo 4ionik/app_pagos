@@ -12,7 +12,6 @@ import { IonicStorageModule } from "@ionic/storage";
 import { PostService } from './services/post.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CurrencyPipe } from '@angular/common';
-import { CalendarModule } from 'ion2-calendar';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +21,6 @@ import { CalendarModule } from 'ion2-calendar';
     HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    CalendarModule,
     IonicStorageModule.forRoot(),
     FormsModule
   ],

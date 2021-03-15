@@ -16,7 +16,6 @@ import { AppConfPage } from '../app-conf/app-conf.page';
 
 import { MenuPage } from './menu.page';
 import { BancosPage } from '../bancos/bancos.page';
-import { BuscarRemesasPage } from '../buscar-remesas/buscar-remesas.page';
 
 const routes: Routes = [
   {
@@ -94,18 +93,10 @@ const routes: Routes = [
   {
     path: '',
     component: MenuPage,
-      path: 'buscar-remesas',
-    children: [{
-      component: BuscarRemesasPage
-    }]
-  },
-  {
-    path: '',
-    component: MenuPage,
     children: [{
       path: 'viaticos',
-    }]
       component: ViaticosPage
+    }]
   },
   {
     path: '',
