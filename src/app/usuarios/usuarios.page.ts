@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { EnvService } from '../services/env.service';
 import { PostService } from '../services/post.service';
-import { ToastController, Platform, ModalController} from '@ionic/angular';
+import { ToastController, Platform, ModalController,AlertController} from '@ionic/angular';
 import { UserModalComponent } from '../user-modal/user-modal.component';
 
 @Component({
@@ -22,7 +22,7 @@ export class UsuariosPage implements OnInit {
   idempresa = 0;
 
   constructor(public toastCtrl: ToastController, private postPvdr: PostService, private storage: Storage,
-    private env: EnvService, private modalController: ModalController) { }
+    private env: EnvService, private modalController: ModalController,public alertCtrl: AlertController) { }
 
 
   ionViewWillEnter(){
@@ -116,32 +116,52 @@ export class UsuariosPage implements OnInit {
     }
   }
 
-  delete(item){
-    let body = {
-      idusuario: item.user_id,
-      idempresa: item.idempresa,
-      aksi: 'deleteUsuarios'
-    }
+  async delete(item){
+    const alert = await this.alertCtrl.create({
+      cssClass: 'my-custom-class',
+      message: '<strong>¿Esta seguro de eliminar el usuario ' + item.nombre_usuario + ' ?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Confirmar',
+          handler: () => {
+            let body = {
+              idusuario: item.user_id,
+              idempresa: item.idempresa,
+              aksi: 'deleteUsuarios'
+            }
+          
+            this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
+              //  console.log(data);
+              if(data['success']){
+                // console.log(data['result']);
+                const toast = await this.toastCtrl.create({
+                  message: 'Usuario Eliminado con exito',
+                  duration: 2000
+                });
+                toast.present();
+          
+                this.doFilterPago();
+              }else{
+                const toast = await this.toastCtrl.create({
+                  message: 'Problemas al eliminar el usuario',
+                  duration: 2000
+                });
+                toast.present();
+              }
+            })
+          }
+        }
+      ]
+    });
 
-    this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-      //  console.log(data);
-      if(data['success']){
-        // console.log(data['result']);
-        const toast = await this.toastCtrl.create({
-          message: 'Usuario Eliminado con exito',
-          duration: 2000
-        });
-        toast.present();
-
-        this.doFilterPago();
-      }else{
-        const toast = await this.toastCtrl.create({
-          message: 'Problemas al eliminar el usuario',
-          duration: 2000
-        });
-        toast.present();
-      }
-    })
+    await alert.present();
 
   }
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { EnvService } from '../services/env.service';
 import { PostService } from '../services/post.service';
-import { ToastController, Platform, ModalController} from '@ionic/angular';
+import { ToastController, Platform, ModalController,AlertController} from '@ionic/angular';
 import { ViaticosModalComponent } from '../viaticos-modal/viaticos-modal.component';
 
 @Component({
@@ -22,7 +22,7 @@ export class ViaticosPage implements OnInit {
   idempresa = 0;
 
   constructor(public toastCtrl: ToastController, private postPvdr: PostService, private storage: Storage,
-    private env: EnvService, private modalController: ModalController) { }
+    private env: EnvService, private modalController: ModalController,public alertCtrl: AlertController) { }
 
   ionViewWillEnter(){
     this.storage.get('session_storage').then((res)=>{
@@ -115,31 +115,51 @@ export class ViaticosPage implements OnInit {
     }
   }
 
-  delete(item){
-    let body = {
-      idviatico: item.idviatico,
-      aksi: 'deleteViaticos'
-    }
+  async delete(item){
+    const alert = await this.alertCtrl.create({
+      cssClass: 'my-custom-class',
+      message: '<strong>¿Esta seguro de eliminar el viatico ' + item.viatico + ' ?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Confirmar',
+          handler: () => {
+            let body = {
+              idviatico: item.idviatico,
+              aksi: 'deleteViaticos'
+            }
+          
+            this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
+              //  console.log(data);
+              if(data['success']){
+                // console.log(data['result']);
+                const toast = await this.toastCtrl.create({
+                  message: 'Viatico Eliminado con exito',
+                  duration: 2000
+                });
+                toast.present();
+          
+                this.doFilterPago();
+              }else{
+                const toast = await this.toastCtrl.create({
+                  message: 'Problemas al eliminar el Viatico',
+                  duration: 2000
+                });
+                toast.present();
+              }
+            })
+          }
+        }
+      ]
+    });
 
-    this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-      //  console.log(data);
-      if(data['success']){
-        // console.log(data['result']);
-        const toast = await this.toastCtrl.create({
-          message: 'Viatico Eliminado con exito',
-          duration: 2000
-        });
-        toast.present();
-
-        this.doFilterPago();
-      }else{
-        const toast = await this.toastCtrl.create({
-          message: 'Problemas al eliminar el Viatico',
-          duration: 2000
-        });
-        toast.present();
-      }
-    })
+    await alert.present();
 
   }
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { EnvService } from '../services/env.service';
 import { PostService } from '../services/post.service';
-import { ToastController, Platform, ModalController} from '@ionic/angular';
+import { ToastController, Platform, ModalController,AlertController} from '@ionic/angular';
 import { BancoModalComponent } from '../banco-modal/banco-modal.component';
 
 
@@ -27,7 +27,7 @@ export class BancosPage implements OnInit {
 
 
   constructor(public toastCtrl: ToastController, private postPvdr: PostService, private storage: Storage,
-    private env: EnvService, private modalController: ModalController) { }
+    private env: EnvService, private modalController: ModalController,public alertCtrl: AlertController) { }
 
     ionViewWillEnter(){
       this.storage.get('session_storage').then((res)=>{
@@ -123,34 +123,57 @@ export class BancosPage implements OnInit {
   }
 
 
-  delete(item){
-    let body = {
-      idempresa: this.idempresa,
-      idbanco: item.idbanco,
-      idcuenta: item.idcuenta,
-      aksi: 'deleteBancos'
-    }
 
-    this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-      //  console.log(data);
-    if(data['success']){
-      // console.log(data['result']);
-      const toast = await this.toastCtrl.create({
-        message: 'Banco Eliminado con exito',
-        duration: 2000
-      });
-      toast.present();
+  async delete(item){
 
-      this.getBancos();
-    }else{
-      const toast = await this.toastCtrl.create({
-        message: 'Problemas al eliminar el banco',
-        duration: 2000
-      });
-      toast.present();
-    }
-  })
+ 
+    const alert = await this.alertCtrl.create({
+      cssClass: 'my-custom-class',
+      message: '<strong>¿Esta seguro de eliminar el banco ' + item.nombre_banco + ' ?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Confirmar',
+          handler: () => {
+            let body = {
+              idempresa: this.idempresa,
+              idbanco: item.idbanco,
+              idcuenta: item.idcuenta,
+              aksi: 'deleteBancos'
+            }
+        
+            this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
+              //  console.log(data);
+            if(data['success']){
+              // console.log(data['result']);
+              const toast = await this.toastCtrl.create({
+                message: 'Banco Eliminado con exito',
+                duration: 2000
+              });
+              toast.present();
+        
+              this.getBancos();
+            }else{
+              const toast = await this.toastCtrl.create({
+                message: 'Problemas al eliminar el banco',
+                duration: 2000
+              });
+              toast.present();
+            }
+           })
+          }
+        }
+      ]
+    });
 
-  }
+    await alert.present();
+
+}
 
 }

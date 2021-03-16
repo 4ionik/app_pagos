@@ -70,6 +70,7 @@ export class ViaticosModalComponent implements OnInit {
       let body = {
         viatico: this.nombre,
         monto: this.monto,
+        idempresa: this.idempresaLogin,
         aksi: 'addViaticos'
       }
   
