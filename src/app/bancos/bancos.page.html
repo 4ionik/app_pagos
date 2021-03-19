@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>List All Bancos</ion-title>
+    <ion-title>Lista Bancos</ion-title>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -11,14 +11,14 @@
 
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Detail</ion-card-title>
+      <ion-card-title>Detalle</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-row>
         <ion-col text-center >Id</ion-col>
         <ion-col text-center>Banco</ion-col>
         <ion-col text-center>Cuenta</ion-col>
-        <ion-col >Actions</ion-col>
+        <ion-col >Acciones</ion-col>
        </ion-row>
        <ion-row *ngFor="let r of rows; let isOdd=odd; let isEven=even" 
        [class.Odd]="isOdd" 
@@ -27,17 +27,29 @@
         <ion-col  text-center>{{r.nombre_banco}}</ion-col> 
         <ion-col  text-center>{{r.cuenta}}</ion-col> 
         <ion-col text-center>
-          <ion-button color="warning" size="small" (click)="presentModal('update', r)">
+          <ion-button color="warning" size="small" (click)="actionModal(r)">
             <ion-icon name="create"></ion-icon>
           </ion-button>
-          <ion-button color="danger" size="small" (click)="delete(r)">
+          <ion-button color="danger" size="small" (click)="deleteOption(r)">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         </ion-col> 
       </ion-row>  
     </ion-card-content>
   </ion-card>
-  <ion-button (click)="presentModal('add', [])">
-    Add Banco
-  </ion-button>
+  <ion-row>
+    <ion-col size="3">
+      <ion-button (click)="presentModal('add', [])">
+        Agregar Banco
+      </ion-button>
+    </ion-col>
+    <ion-col size="3">
+      <ion-button (click)="presentModal('add-cuenta', [])">
+        Agregar Cuenta
+      </ion-button>
+    </ion-col>
+    <ion-col size="6">
+    </ion-col>
+  </ion-row>
+  
 </ion-content>

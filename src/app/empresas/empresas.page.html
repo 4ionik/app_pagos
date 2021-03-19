@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>List All Empresas</ion-title>
+    <ion-title>Lista Empresas</ion-title>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -11,13 +11,13 @@
 
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Detail</ion-card-title>
+      <ion-card-title>Detalle</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-row>
         <ion-col text-center >Id</ion-col>
         <ion-col text-center>Empresa</ion-col>
-        <ion-col >Actions</ion-col>
+        <ion-col >Acciones</ion-col>
        </ion-row>
        <ion-row *ngFor="let r of rows; let isOdd=odd; let isEven=even" 
        [class.Odd]="isOdd" 
@@ -36,6 +36,6 @@
     </ion-card-content>
   </ion-card>
   <ion-button (click)="presentModal('add', [])">
-    Add Empresa
+    Agregar Empresa
   </ion-button>
 </ion-content>

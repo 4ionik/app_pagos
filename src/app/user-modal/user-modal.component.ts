@@ -32,24 +32,24 @@ export class UserModalComponent implements OnInit {
   select_rol: Rol[] = [];
   idrol = 0;
 
-  username: string;
-  name: string;
-  password: string;
-  id: number;
+  username = "";
+  name = "";
+  password = "";
+  id = 0;
   estatus = 1;
 
   public items: any;
 
   constructor(private navParams: NavParams, private modalCtrl: ModalController, private postPvdr: PostService, private storage: Storage,
     private env: EnvService, public toastCtrl: ToastController) { 
-    console.log(this.navParams.get('isUpdate'));
+ 
     this.isUpdate = this.navParams.get('isUpdate');
     if (!this.isUpdate) {
       this.idempresaLogin = this.navParams.get('idempresaLogin');
     }else{
       this.idempresaLogin = this.navParams.get('idempresaLogin');
       this.items = this.navParams.get('item');
-      console.log(this.items.user_id);
+   
       this.id = this.items.user_id;
       this.username = this.items.username;
       this.name = this.items.nombre_usuario;
@@ -57,14 +57,14 @@ export class UserModalComponent implements OnInit {
       this.idempresa = this.items.idempresa;
       this.idrol = this.items.idrol;
 
-      console.log(this.items.password);
+   
     }
     
     
   }
 
   ngOnInit() {
-    console.log('aqui');
+ 
     this.doRefreshEmp();
     this.doRefreshRol();
 
@@ -82,9 +82,19 @@ export class UserModalComponent implements OnInit {
     
     if (action == 'add') {
 
-      if (this.username == '') {
+      if (this.username == "") {
         const toast = await this.toastCtrl.create({
           message: 'Debe ingresar un username para continuar.',
+          duration: 2000
+        });
+        toast.present();
+
+        return false;
+      }
+
+      if (this.password == "") {
+        const toast = await this.toastCtrl.create({
+          message: 'Debe ingresar una contraseña para continuar.',
           duration: 2000
         });
         toast.present();
@@ -122,9 +132,9 @@ export class UserModalComponent implements OnInit {
       }
   
       this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-        //  console.log(data);
+        
       if(data['success']){
-        // console.log(data['result']);
+        
         const toast = await this.toastCtrl.create({
           message: 'Usuario agregado con exito',
           duration: 2000
@@ -146,6 +156,46 @@ export class UserModalComponent implements OnInit {
 
     }else{
 
+      if (this.username == "") {
+        const toast = await this.toastCtrl.create({
+          message: 'Debe ingresar un username para continuar.',
+          duration: 2000
+        });
+        toast.present();
+
+        return false;
+      }
+
+      if (this.password == "") {
+        const toast = await this.toastCtrl.create({
+          message: 'Debe ingresar una contraseña para continuar.',
+          duration: 2000
+        });
+        toast.present();
+
+        return false;
+      }
+
+      if (this.idempresa == 0) {
+        const toast = await this.toastCtrl.create({
+          message: 'Debe ingresar una empresa para continuar.',
+          duration: 2000
+        });
+        toast.present();
+
+        return false;
+      }
+
+      if (this.idrol == 0) {
+        const toast = await this.toastCtrl.create({
+          message: 'Debe agregar un rol para continuar.',
+          duration: 2000
+        });
+        toast.present();
+
+        return false;
+      }
+
       let body = {
         user_id: this.id,
         username: this.username,
@@ -158,9 +208,9 @@ export class UserModalComponent implements OnInit {
       }
   
       this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-        //  console.log(data);
+        
       if(data['success']){
-        // console.log(data['result']);
+        
         const toast = await this.toastCtrl.create({
           message: 'Usuario actualizado correctamente',
           duration: 2000
@@ -187,7 +237,7 @@ export class UserModalComponent implements OnInit {
     }
 
     this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-      console.log(data);
+   
       if(data['success']){
         this.roles = data['result'];
         if (this.roles.length > 0) {
@@ -199,7 +249,7 @@ export class UserModalComponent implements OnInit {
           
           this.select_rol[0] = <Rol>{idrol: 0, nombre_rol: 'No hay datos'};
         }
-        console.log(this.select_rol);
+     
       }
     })
   }
@@ -211,7 +261,7 @@ export class UserModalComponent implements OnInit {
     }
 
     this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-      console.log(data);
+   
       if(data['success']){
         this.empresa = data['result'];
         if (this.empresa.length > 0) {
@@ -223,7 +273,7 @@ export class UserModalComponent implements OnInit {
           
           this.select_emp[0] = <Empresa>{idempresa: 0, nombre_empresa: 'No hay datos'};
         }
-        console.log(this.select_emp);
+     
       }
     })
   }

@@ -50,14 +50,14 @@ export class EmpresasPage implements OnInit {
     }
 
     this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-        //  console.log(data);
+        
       if(data['success']){
-        // console.log(data['result']);
+       
         this.empresas = data['result'];
-        console.log(this.empresas.length);
+    
         if (this.empresas.length > 0) {
           this.rows = this.empresas;
-          console.log(this.rows);
+      
 
         }else{
           const toast = await this.toastCtrl.create({
@@ -89,7 +89,7 @@ export class EmpresasPage implements OnInit {
       });
   
       modal.onDidDismiss().then(data => {
-        console.log('dismissed', data);
+    
         this.getEmpresas();
       });
   
@@ -107,7 +107,7 @@ export class EmpresasPage implements OnInit {
       });
   
       modal.onDidDismiss().then(data => {
-        console.log('dismissed', data);
+    
         this.getEmpresas();
       });
   
@@ -127,7 +127,7 @@ export class EmpresasPage implements OnInit {
             role: 'cancel',
             cssClass: 'secondary',
             handler: (blah) => {
-              console.log('Confirm Cancel: blah');
+          
             }
           }, {
             text: 'Confirmar',
@@ -139,9 +139,9 @@ export class EmpresasPage implements OnInit {
 
 
                 this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-                  //  console.log(data);
+                  
                 if(data['success']){
-                  // console.log(data['result']);
+                 
                   const toast = await this.toastCtrl.create({
                     message: 'Empresa Eliminada con exito',
                     duration: 2000

@@ -20,7 +20,7 @@ export class EmpresaModalComponent implements OnInit {
 
       this.isUpdate = this.navParams.get('isUpdate');
 
-      console.log(this.navParams.get('idempresa'));
+  
       if (!this.isUpdate) {
         this.idEmpresa = this.navParams.get('idempresa');
       }else{
@@ -28,7 +28,7 @@ export class EmpresaModalComponent implements OnInit {
         this.empresa = this.navParams.get('nombre_empresa');
 
   
-        // console.log(this.items.password);
+       
       }
 
      }
@@ -46,7 +46,7 @@ export class EmpresaModalComponent implements OnInit {
     if (action == 'add') {
 
 
-      console.log('add');
+  
       if (this.empresa == '') {
         const toast = await this.toastCtrl.create({
           message: 'Debe ingresar una empresa para continuar.',
@@ -63,9 +63,9 @@ export class EmpresaModalComponent implements OnInit {
       }
   
       this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-        //  console.log(data);
+        
       if(data['success']){
-        // console.log(data['result']);
+       
         const toast = await this.toastCtrl.create({
           message: 'Empresa agregada con exito',
           duration: 2000
@@ -86,7 +86,7 @@ export class EmpresaModalComponent implements OnInit {
     }else{
 
 
-      console.log('Aqui');
+  
       let body = {
         idEmpresa: this.idEmpresa,
         empresa: this.empresa,
@@ -94,9 +94,9 @@ export class EmpresaModalComponent implements OnInit {
       }
   
       this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-        //  console.log(data);
+        
       if(data['success']){
-        // console.log(data['result']);
+       
         const toast = await this.toastCtrl.create({
           message: 'Empresa actualizado correctamente',
           duration: 2000

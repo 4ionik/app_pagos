@@ -38,7 +38,7 @@ export class PostService {
 		let options =  {headers: headers };
 
 		const formData = new FormData();
-		formData.append('archivo', blobData, `myimage.${ext}`);
+		formData.append('archivo', blobData, name+'.'+ext);
 		formData.append('name', name);
 		formData.append('aksi', 'uploadImage');
 		
@@ -74,7 +74,7 @@ export class PostService {
 
 		let body = {
 			id: id,
-			aksi: 'doFilterPago'
+			aksi: 'deleteImage'
 		}
 
 		return this.http.post(`${this.env.API_URL}proses-api.php`, JSON.stringify(body), options);

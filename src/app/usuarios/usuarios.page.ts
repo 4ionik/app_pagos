@@ -52,14 +52,14 @@ export class UsuariosPage implements OnInit {
     }
 
     this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-        //  console.log(data);
+        
       if(data['success']){
-        // console.log(data['result']);
+        
         this.usuarios = data['result'];
-        console.log(this.usuarios.length);
+     
         if (this.usuarios.length > 0) {
           this.rows = this.usuarios;
-          console.log(this.rows);
+       
 
         }else{
           const toast = await this.toastCtrl.create({
@@ -91,7 +91,7 @@ export class UsuariosPage implements OnInit {
       });
   
       modal.onDidDismiss().then(data => {
-        console.log('dismissed', data);
+     
         this.doFilterPago();
       });
   
@@ -108,7 +108,7 @@ export class UsuariosPage implements OnInit {
       });
   
       modal.onDidDismiss().then(data => {
-        console.log('dismissed', data);
+     
         this.doFilterPago();
       });
   
@@ -126,7 +126,7 @@ export class UsuariosPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+         
           }
         }, {
           text: 'Confirmar',
@@ -138,9 +138,9 @@ export class UsuariosPage implements OnInit {
             }
           
             this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-              //  console.log(data);
+              
               if(data['success']){
-                // console.log(data['result']);
+                
                 const toast = await this.toastCtrl.create({
                   message: 'Usuario Eliminado con exito',
                   duration: 2000

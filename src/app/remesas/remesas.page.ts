@@ -361,6 +361,16 @@ export class RemesasPage implements OnInit {
   }
 
   async addImage(source: CameraSource) {
+
+    if (this.id_voucher == "") {
+      const toast = await this.toastCtrl.create({
+        message: 'Debes ingresar antes un voucher para continuar',
+        duration: 2000
+      });
+      toast.present();
+      return false;
+    }
+
     this.image = await Camera.getPhoto({
       quality: 60,
       allowEditing: true,
@@ -369,9 +379,9 @@ export class RemesasPage implements OnInit {
     });
  
     this.blobData = this.b64toBlob(this.image.base64String, `image/${this.image.format}`);
-    const imageName = 'Give me a name';
+    const imageName = 'image'+this.id_voucher;
 
-    this.postPvdr.uploadImage(this.blobData, this.imageName, this.image.format).subscribe(async data =>{
+    this.postPvdr.uploadImage(this.blobData, imageName, this.image.format).subscribe(async data =>{
       if(data['success']){
         console.log('success');
         console.log(data['result']);
@@ -406,11 +416,12 @@ export class RemesasPage implements OnInit {
   }
  
   deleteImage(image: ApiImage, index) {
-    this.images.splice(index, 1);
-    this.isTakePhoto = false;
-    // this.postPvdr.deleteImage(image._id).subscribe(res => {
-    //   this.images.splice(index, 1);
-    // });
+    console.log(image);
+    // this.images.splice(index, 1);
+    this.postPvdr.deleteImage(image._id).subscribe(res => {
+      this.images.splice(index, 1);
+      this.isTakePhoto = false;
+    });
   }
 
   getCurrency(amount: number) {
@@ -526,7 +537,12 @@ export class RemesasPage implements OnInit {
   async sendRemesa(){
 
     if (this.selectedValues == '0') {
-      
+      const toast = await this.toastCtrl.create({
+        message: 'Debes elegir una opción para poder continuar',
+        duration: 2000
+      });
+      toast.present();
+      return false;
     }
 
     if (this.selectedValues == '5') {
@@ -545,11 +561,18 @@ export class RemesasPage implements OnInit {
           aksi: 'addRemesas'
         }
   
-        console.log(body.viaticosTotal);
+        if (this.id_voucher == "") {
+          const toast = await this.toastCtrl.create({
+            message: 'Debes ingresar un voucher para poder continuar',
+            duration: 2000
+          });
+          toast.present();
+          return false;
+        }
   
         if (this.selectedBanco == "0") {
           const toast = await this.toastCtrl.create({
-            message: 'Debe elegir una cuenta de banco para poder continuar',
+            message: 'Debes elegir una cuenta de banco para poder continuar',
             duration: 2000
           });
           toast.present();

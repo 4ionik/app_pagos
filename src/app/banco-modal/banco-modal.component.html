@@ -1,18 +1,33 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Banco Tool</ion-title>
+    <ion-title>Mantenimiento Banco</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="cerrarModal()">Close</ion-button>
+      <ion-button (click)="cerrarModal()">Cerrar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div *ngIf="!isUpdate; else conditionFalse">
+  <div *ngIf="this.action == 'add'">
 
     <ion-item>
       <ion-label position="stacked">Banco:</ion-label>
       <ion-input [(ngModel)]="banco" placeholder="Banco"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-button (click)="submitForm('add')">Agregar</ion-button>
+    </ion-item>
+
+  </div>
+  <div *ngIf="this.action == 'add-cuenta'">
+
+    <ion-item>
+      <ion-label position="stacked">Banco:</ion-label>
+      <!-- <ion-input [(ngModel)]="banco" placeholder="Banco"></ion-input> -->
+      <ion-select placeholder="Selecciona una opci&oacute;n" value="1" okText="Aceptar" cancelText="Cancelar" [(ngModel)]="selectedBanco">
+        <ion-select-option *ngFor="let p of this.select_banco" [value]="p.idbanco">{{p.banco}}</ion-select-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>
@@ -21,11 +36,34 @@
     </ion-item>
 
     <ion-item>
-      <ion-button (click)="submitForm('add')">Add</ion-button>
+      <ion-button (click)="submitForm('add-cuenta')">Agregar</ion-button>
     </ion-item>
 
   </div>
-  <ng-template #conditionFalse>
+  <div *ngIf="this.action == 'update'">
+
+    <ion-item>
+      <ion-label position="stacked">ID</ion-label>
+      <ion-input [(ngModel)]="idbanco" placeholder="idBanco" disabled></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Banco</ion-label>
+      <ion-input [(ngModel)]="banco" placeholder="Banco" disabled></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Cuenta</ion-label>
+      <ion-input [(ngModel)]="cuenta" placeholder="Cuenta"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-button (click)="submitForm('update')">Actualizar</ion-button>
+    </ion-item>
+
+  </div>
+  <div *ngIf="this.action == 'update-banco'">
+
     <ion-item>
       <ion-label position="stacked">ID</ion-label>
       <ion-input [(ngModel)]="idbanco" placeholder="idBanco" disabled></ion-input>
@@ -37,12 +75,9 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">Cuenta</ion-label>
-      <ion-input [(ngModel)]="cuenta" placeholder="Cuenta"></ion-input>
+      <ion-button (click)="submitForm('update-banco')">Actualizar</ion-button>
     </ion-item>
 
-    <ion-item>
-      <ion-button (click)="submitForm('update')">Update</ion-button>
-    </ion-item>
-  </ng-template>
+  </div>
+  
 </ion-content>

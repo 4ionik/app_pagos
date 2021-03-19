@@ -34,16 +34,16 @@ export class MenuPage implements OnInit {
       url: '/menu/home',
       icon: 'cube'
     },
-    {
-      tittle: 'Pagos',
-      url: '/menu/pagos',
-      icon: 'add'
-    },
-    {
-      tittle: 'Remesas',
-      url: '/menu/remesas',
-      icon: 'archive'
-    },
+    // {
+    //   tittle: 'Pagos',
+    //   url: '/menu/pagos',
+    //   icon: 'add'
+    // },
+    // {
+    //   tittle: 'Remesas',
+    //   url: '/menu/remesas',
+    //   icon: 'archive'
+    // },
     {
       tittle: 'Reportes',
       url: '/menu/reportes',
@@ -51,17 +51,11 @@ export class MenuPage implements OnInit {
     },
     {
       tittle: 'Mantenimiento',
-      // url: '/menu/mantenimiento',
       subPages: [
         { 
           tittle: 'Usuarios', 
           url: '/menu/usuarios',
           icon: 'person-add'
-        },
-        { 
-          tittle: 'Empresas', 
-          url: '/menu/empresas',
-          icon: 'podium'
         },
         { 
           tittle: 'Ordenes', 
@@ -77,7 +71,65 @@ export class MenuPage implements OnInit {
           tittle: 'Viaticos', 
           url: '/menu/viaticos',
           icon: 'pricetag'
+        }
+        // { 
+        //   tittle: 'App Config', 
+        //   url: '/menu/app-conf',
+        //   icon: 'cog'
+        // }
+      ]
+    }
+  ];
+
+  public pagesSAdmin = [
+    {
+      tittle: 'Home',
+      url: '/menu/home',
+      icon: 'cube'
+    },
+    // {
+    //   tittle: 'Pagos',
+    //   url: '/menu/pagos',
+    //   icon: 'add'
+    // },
+    // {
+    //   tittle: 'Remesas',
+    //   url: '/menu/remesas',
+    //   icon: 'archive'
+    // },
+    // {
+    //   tittle: 'Reportes',
+    //   url: '/menu/reportes',
+    //   icon: 'browsers'
+    // },
+    {
+      tittle: 'Mantenimiento',
+      subPages: [
+        { 
+          tittle: 'Usuarios', 
+          url: '/menu/usuarios',
+          icon: 'person-add'
         },
+        { 
+          tittle: 'Empresas', 
+          url: '/menu/empresas',
+          icon: 'podium'
+        },
+        // { 
+        //   tittle: 'Ordenes', 
+        //   url: '/menu/ordenes',
+        //   icon: 'pricetag'
+        // },
+        // { 
+        //   tittle: 'Bancos', 
+        //   url: '/menu/bancos',
+        //   icon: 'logo-usd'
+        // },
+        // { 
+        //   tittle: 'Viaticos', 
+        //   url: '/menu/viaticos',
+        //   icon: 'pricetag'
+        // },
         { 
           tittle: 'App Config', 
           url: '/menu/app-conf',
@@ -104,20 +156,20 @@ export class MenuPage implements OnInit {
       this.selectedPath = event.url;
       
     });
-    console.log(this.selectedPath);
+ 
   }
 
   ionViewWillEnter(){
 
     this.storage.get('session_storage').then((res)=>{
-      console.log(res);
+   
       this.anggota = res;
       this.username = this.anggota.username;
       this.idusuario = this.anggota.user_id;
       this.idrol = this.anggota.idrol;
       this.idempresa = this.anggota.idempresa;
 
-      console.log(this.idrol);
+   
       if (this.idrol==1) {
         this.isAdmin = true;
       }else{

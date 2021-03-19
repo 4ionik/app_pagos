@@ -21,7 +21,13 @@
 		</ion-row>
 	</ion-grid>
 
-  <div class="ion-padding">
+  <div class="ion-padding" *ngIf="idrol == 1">
+    <div class="box blue">
+      <h1>{{num_emp}}</h1>
+      <p>Empresas hasta el dia <strong>{{today_emp}}</strong></p>
+    </div>
+  </div>
+  <div class="ion-padding" *ngIf="idrol > 1">
     <!-- <ion-card>
       <ion-card-header>
         Bar Chart
@@ -31,8 +37,8 @@
       </ion-card-content>
     </ion-card> -->
     <div class="box blue">
-      <h1>$1,000</h1>
-      <p>Recolectados para el dia 03/03/2021</p>
+      <h1>{{box_price_formatted}}</h1>
+      <p>Recolectados para el dia <strong>{{today}}</strong></p>
     </div>
 
     <ion-card>
