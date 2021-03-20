@@ -185,7 +185,7 @@ export class MenuPage implements OnInit {
 
   async prosesLogout(){
     this.storage.clear();
-    this.router.navigate(['/login']);
+    this.router.navigate(['']);
     const toast = await this.toastCtrl.create({
         message: 'logout succesful',
         duration: 3000

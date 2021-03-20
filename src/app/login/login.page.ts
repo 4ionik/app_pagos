@@ -35,6 +35,7 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    
     this.getLogoApp();
     this.doRefresh();
   }
@@ -86,31 +87,34 @@ export class LoginPage implements OnInit {
     };
 
     this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-   
-      var alertpesan = data['msg'];
+
+      var alertpesan = "";
+
+      let result = await Promise.all(alertpesan);
+
+      alertpesan = data['msg'];
       
       if(data['success']){
-     
         this.storage.set("isUserLoggedIn", true);
         this.storage.set("LogoUrl", this.app_url);
         this.storage.set('session_storage', data['result']);
-        this.router.navigate(['/menu/home']);
-        const toast = await this.toastCtrl.create({
-          message: 'Inicio de sesion exitoso',
-          duration: 2000
-        });
-        toast.present();
+
         this.username = "";
         this.password = "";
+
+        setTimeout(()=>{
+          this.router.navigate(['/menu/home']);
+        },800)
+        
      
       }else{
-     
         const toast = await this.toastCtrl.create({
           message: alertpesan,
           duration: 2000
         });
         toast.present();
       }
+
     });
   }
 

@@ -16,10 +16,6 @@ const routes: Routes = [
     path: 'menu',
     loadChildren: () => import('./menu/menu.module').then( m => m.MenuPageModule),
     canActivate: [LoginGuard]
-  },
-  {
-    path: 'app-conf',
-    loadChildren: () => import('./app-conf/app-conf.module').then( m => m.AppConfPageModule)
   }
 ];
 
