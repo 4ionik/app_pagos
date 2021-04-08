@@ -102,6 +102,7 @@ export class RemesasPage implements OnInit {
     private sanitizer: DomSanitizer, private actionSheetCtrl: ActionSheetController, private env: EnvService, private currencyPipe: CurrencyPipe) { 
     
     this.URL_base = this.env.API_URL;
+    this.ionViewWillEnter();
     this.doRefresh();
     this.doRefreshBanco();
     this.doRefreshViaticos();
@@ -157,6 +158,7 @@ export class RemesasPage implements OnInit {
 
   doRefreshViaticos(){
     let body = {
+      idempresa : this.idempresa,
       aksi: 'doFilterViatico'
     }
 
@@ -180,7 +182,11 @@ export class RemesasPage implements OnInit {
   }
 
   doRefreshBanco(){
+    console.log('REFRESH BANCOssss');
+    console.log('Rol: ' + this.idrol);
+    console.log(this.idempresa);
     let body = {
+      idempresa : this.idempresa,
       aksi: 'doRefreshBanco'
     }
 
