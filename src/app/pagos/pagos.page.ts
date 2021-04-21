@@ -65,11 +65,11 @@ export class PagosPage implements OnInit {
       }
       this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
         // console.log(data['result'].minLength);
-        console.log(data);
+        
         if(data['success']){
           this.ordenes = data['result'];
           if (this.ordenes.length > 0) {
-            console.log(this.ordenes[0]['client'])
+            
             this.idorden = this.ordenes[0]['idorden'];
             this.identifier_order = this.ordenes[0]['identifier_order'];
             this.client = this.ordenes[0]['client'];
@@ -101,7 +101,7 @@ export class PagosPage implements OnInit {
     }
 
     this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-      console.log(data);
+      
       if(data['success']){
         this.tipo_pago = data['result'];
         if (this.tipo_pago.length > 0) {
@@ -113,7 +113,7 @@ export class PagosPage implements OnInit {
           
           this.select_pago[0] = <Tipo>{idtipopago: 0, nombre_tipo_pago: 'No hay datos'};
         }
-        console.log(this.select_pago);
+        
         if (this.idTipoPago === 1) {
           this.box_price = this.cost;
           this.box_price_formatted = this.getCurrency(this.cost)
@@ -137,7 +137,7 @@ export class PagosPage implements OnInit {
     this.box_price = $event.target.value.replace(/[^0-9.]/g, "");
     if (this.box_price) {
         this.box_price_formatted = this.getCurrency(this.box_price)
-        console.log("box_price_formatted: " + this.box_price_formatted);
+        
     }
   }
 
@@ -175,9 +175,9 @@ export class PagosPage implements OnInit {
       }
   
       this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-        console.log(data);
+        
         if(data['success']){
-          console.log(data['result']);
+          
           if (data['result'] == 'success') {
             const toast = await this.toastCtrl.create({
               message: 'Pago registrado correctamente',

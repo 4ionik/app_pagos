@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class EnvService {
 
+  // API_URL = 'https://www.alwayskonnected.com/APIPagos/';
   API_URL = 'http://34.195.109.155/app_pagos/server_api/';
 
   constructor() { }

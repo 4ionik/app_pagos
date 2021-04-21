@@ -10,6 +10,8 @@ import { ToastController } from '@ionic/angular';
 })
 export class MenuPage implements OnInit {
 
+  
+
   public pages = [
     {
       tittle: 'Home',
@@ -32,7 +34,8 @@ export class MenuPage implements OnInit {
     {
       tittle: 'Home',
       url: '/menu/home',
-      icon: 'cube'
+      icon: 'cube',
+      open: false
     },
     // {
     //   tittle: 'Pagos',
@@ -47,7 +50,8 @@ export class MenuPage implements OnInit {
     {
       tittle: 'Reportes',
       url: '/menu/reportes',
-      icon: 'browsers'
+      icon: 'browsers',
+      open: false
     },
     {
       tittle: 'Mantenimiento',
@@ -55,22 +59,26 @@ export class MenuPage implements OnInit {
         { 
           tittle: 'Usuarios', 
           url: '/menu/usuarios',
-          icon: 'person-add'
+          icon: 'person-add',
+          open: false
         },
         { 
           tittle: 'Ordenes', 
           url: '/menu/ordenes',
-          icon: 'pricetag'
+          icon: 'pricetag',
+          open: false
         },
         { 
           tittle: 'Bancos', 
           url: '/menu/bancos',
-          icon: 'logo-usd'
+          icon: 'logo-usd',
+          open: false
         },
         { 
           tittle: 'Viaticos', 
           url: '/menu/viaticos',
-          icon: 'pricetag'
+          icon: 'pricetag',
+          open: false
         }
         // { 
         //   tittle: 'App Config', 
@@ -83,9 +91,10 @@ export class MenuPage implements OnInit {
 
   public pagesSAdmin = [
     {
-      tittle: 'Home',
+      tittle: 'Inicio',
       url: '/menu/home',
-      icon: 'cube'
+      icon: 'cube',
+      open: false
     },
     // {
     //   tittle: 'Pagos',
@@ -108,12 +117,14 @@ export class MenuPage implements OnInit {
         { 
           tittle: 'Usuarios', 
           url: '/menu/usuarios',
-          icon: 'person-add'
+          icon: 'person-add',
+          open: false
         },
         { 
           tittle: 'Empresas', 
           url: '/menu/empresas',
-          icon: 'podium'
+          icon: 'podium',
+          open: false
         },
         // { 
         //   tittle: 'Ordenes', 
@@ -133,7 +144,8 @@ export class MenuPage implements OnInit {
         { 
           tittle: 'App Config', 
           url: '/menu/app-conf',
-          icon: 'cog'
+          icon: 'cog',
+          open: false
         }
       ]
     }

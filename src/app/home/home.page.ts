@@ -137,9 +137,9 @@ export class HomePage implements AfterViewInit{
         
         this.remesado = data['result']['num_remesa'];
         this.premesar = data['result']['num_pen_remesa'];
-        console.log(data['result']['num_pen_remesa']);
+        
       }else{
-        this.remesado = data['result']['num_remesa'];
+        this.remesado = data['result']['num_remesa']; 
         this.premesar = data['result']['num_pen_remesa'];
       }
     })

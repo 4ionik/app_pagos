@@ -99,6 +99,8 @@ export class LoginPage implements OnInit {
         this.storage.set("LogoUrl", this.app_url);
         this.storage.set('session_storage', data['result']);
 
+        
+
         this.username = "";
         this.password = "";
 

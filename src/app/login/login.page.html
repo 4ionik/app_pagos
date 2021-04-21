@@ -26,7 +26,7 @@
 
 <ion-header>
 	<ion-toolbar color="mango">
-		<ion-title>Login</ion-title>
+		<ion-title>Inicio Sesion</ion-title>
 	</ion-toolbar>
 </ion-header>
 
@@ -47,17 +47,17 @@
 
 	<ion-card>
 		<ion-card-header>
-			<ion-card-title>Login</ion-card-title>
+			<!-- <ion-card-title>Login</ion-card-title> -->
 		</ion-card-header>
 		<ion-card-content>
 			<ion-list>
 				<ion-item>
-					<ion-label position="stacked">Username</ion-label>
+					<ion-label position="stacked">Usuario:</ion-label>
 					<ion-input autocomplete="off" type="text" name="username" [(ngModel)]="username"></ion-input>
 				</ion-item>
 	
 				<ion-item>
-					<ion-label position="stacked">Password</ion-label>
+					<ion-label position="stacked">Contraseña:</ion-label>
 					<ion-input autocomplete="off" type="password" name="password" [(ngModel)]="password">
 					</ion-input>
 				</ion-item>
@@ -69,7 +69,7 @@
 				</ion-item>
 	
 			</ion-list>
-			<ion-button expand="block" share="round" color="dark" (click)="prosesLogin()">Login</ion-button>
+			<ion-button expand="block" share="round" color="dark" (click)="prosesLogin()">Iniciar Sesiòn</ion-button>
 		</ion-card-content>
 	</ion-card>
 	<!-- <form>

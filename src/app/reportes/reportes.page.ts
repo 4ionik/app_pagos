@@ -100,9 +100,9 @@ export class ReportesPage implements OnInit {
         return false;
       }
 
-      if (this.compare(this.selectedDate, this.selectedDateHasta) == -1) {
+      if (this.compare(this.selectedDate, this.selectedDateHasta) == 1) {
         const toast = await this.toastCtrl.create({
-          message: 'La fecha final no puede ser mayor que la inicial',
+          message: 'La fecha inicial no puede ser mayor que la final',
           duration: 2000
         });
         toast.present();
@@ -168,9 +168,9 @@ export class ReportesPage implements OnInit {
         return false;
       }
 
-      if (this.compare(this.selectedDate, this.selectedDateHasta) == -1) {
+      if (this.compare(this.selectedDate, this.selectedDateHasta) == 1) {
         const toast = await this.toastCtrl.create({
-          message: 'La fecha final no puede ser mayor que la inicial',
+          message: 'La fecha inicial no puede ser mayor que la final',
           duration: 2000
         });
         toast.present();
@@ -189,7 +189,7 @@ export class ReportesPage implements OnInit {
         if(data['success']){
           // console.log(data['result']);
           this.reportes = data['result'];
-          console.log(this.reportes);
+          
           if (this.reportes.length > 0) {
             this.rows = this.reportes;
             this.isHidden = false;
@@ -234,9 +234,9 @@ export class ReportesPage implements OnInit {
         return false;
       }
 
-      if (this.compare(this.selectedDate, this.selectedDateHasta) == -1) {
+      if (this.compare(this.selectedDate, this.selectedDateHasta) == 1) {
         const toast = await this.toastCtrl.create({
-          message: 'La fecha final no puede ser mayor que la inicial',
+          message: 'La fecha inicial no puede ser mayor que la final',
           duration: 2000
         });
         toast.present();

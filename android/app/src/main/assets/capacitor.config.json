@@ -1,13 +1,9 @@
 {
-  "appId": "com.pagos.app",
-  "appName": "appPagos",
+  "appId": "com.pago",
+  "appName": "PagosApp",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    }
-  },
+  "linuxAndroidStudioPath": "/snap/android-studio/current/android-studio/bin/studio.sh",
   "cordova": {}
 }

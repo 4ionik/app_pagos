@@ -1,4 +1,4 @@
-package com.pagos.app;
+package com.pago;
 
 import android.os.Bundle;
 

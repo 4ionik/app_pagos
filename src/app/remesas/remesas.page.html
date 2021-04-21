@@ -16,13 +16,13 @@
         <ion-item>
           <ion-label position="floating">Tipo transacci&oacute;n</ion-label>
           
-          <ion-select [(ngModel)] ="selectedValues" placeholder="Selecciona una opci&oacute;n" value="0" okText="Aceptar" cancelText="Cancelar">
+          <ion-select [(ngModel)] ="selectedValues" placeholder="Selecciona una opci&oacute;n" value="0" okText="Aceptar" cancelText="Cancelar" (ionChange) = "doFilterPago()">
             <ion-select-option *ngFor="let p of this.select_orden" [value]="p.id_orden">{{p.nombre_orden}}</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-item lines="none">
+        <!-- <ion-item lines="none">
           <ion-button  stype="button" expand="full" size="default" shape="round" color="primary" (click)="doFilterPago()">Agregar</ion-button>
-        </ion-item>
+        </ion-item> -->
     </ion-card-content>
 
   </ion-card>

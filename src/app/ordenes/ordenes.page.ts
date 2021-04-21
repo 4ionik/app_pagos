@@ -135,7 +135,7 @@ export class OrdenesPage implements OnInit {
       aksi: 'addOrdenes'
     }
 
-    console.log(body);
+    
 
     this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
       //  console.log(data);

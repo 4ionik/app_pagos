@@ -102,10 +102,7 @@ export class RemesasPage implements OnInit {
     private sanitizer: DomSanitizer, private actionSheetCtrl: ActionSheetController, private env: EnvService, private currencyPipe: CurrencyPipe) { 
     
     this.URL_base = this.env.API_URL;
-    this.ionViewWillEnter();
-    this.doRefresh();
-    this.doRefreshBanco();
-    this.doRefreshViaticos();
+
 
     this.columns = [
       { name: 'Orden', prop: 'Orden' },
@@ -122,6 +119,10 @@ export class RemesasPage implements OnInit {
       this.idusuario = this.anggota.user_id;
       this.idrol = this.anggota.idrol;
       this.idempresa = this.anggota.idempresa;
+
+      this.doRefresh();
+      this.doRefreshBanco();
+      this.doRefreshViaticos();
     });
     
   }
@@ -130,6 +131,7 @@ export class RemesasPage implements OnInit {
     if ((this.platform.is('mobile') && this.platform.is('hybrid')) || this.platform.is('desktop')) {
       this.isDesktop = true;
     }
+
   }
 
   doRefresh(){
@@ -138,7 +140,7 @@ export class RemesasPage implements OnInit {
     }
 
     this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-      console.log(data);
+      
       if(data['success']){
         this.orden_remesa = data['result'];
         if (this.orden_remesa.length > 0) {
@@ -150,7 +152,7 @@ export class RemesasPage implements OnInit {
           
           this.select_orden[0] = <Orden>{id_orden: 0, nombre_orden: 'No hay datos'};
         }
-        console.log(this.select_orden);
+        
       }
     })
 
@@ -163,7 +165,7 @@ export class RemesasPage implements OnInit {
     }
 
     this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-      console.log(data);
+      
       if(data['success']){
         this.viaticos = data['result'];
         if (this.viaticos.length > 0) {
@@ -175,23 +177,21 @@ export class RemesasPage implements OnInit {
           
           this.select_viat[0] = <Viaticos>{id_viatico: 0, nombre_viatico: 'No hay datos', montoV: 0};
         }
-        console.log(this.select_viat);
+        
       }
     })
 
   }
 
   doRefreshBanco(){
-    console.log('REFRESH BANCOssss');
-    console.log('Rol: ' + this.idrol);
-    console.log(this.idempresa);
+    
     let body = {
       idempresa : this.idempresa,
       aksi: 'doRefreshBanco'
     }
 
     this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-      console.log(data);
+      
       if(data['success']){
         this.banco = data['result'];
         if (this.banco.length > 0) {
@@ -203,7 +203,6 @@ export class RemesasPage implements OnInit {
           
           this.select_banco[0] = <Banco>{id_banco: 0, nombre_banco: 'No hay datos'};
         }
-        console.log(this.select_banco);
       }
     })
   }
@@ -230,14 +229,14 @@ export class RemesasPage implements OnInit {
       this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
           //  console.log(data);
         if(data['success']){
-          console.log('success');
+          
           // console.log(data['result']);
           this.ordenes = data['result'];
           // console.log(this.rows );
           if (this.ordenes.length > 0) {
             this.rows = this.ordenes;
             this.calculateTota(this.rows);
-            console.log(this.rows);
+            
             this.ishidden = false;
             this.ishidden_1 = true;
             this.ishidden_2 = true;
@@ -266,14 +265,14 @@ export class RemesasPage implements OnInit {
       this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
           //  console.log(data);
         if(data['success']){
-          console.log('success');
+          
           // console.log(data['result']);
           this.ordenes = data['result'];
           // console.log(this.rows );
           if (this.ordenes.length > 0) {
             this.rows = this.ordenes;
             this.calculateTota(this.rows);
-            console.log(this.rows);
+            
             this.ishidden = true;
             this.ishidden_1 = false;
             this.ishidden_2 = true;
@@ -291,7 +290,7 @@ export class RemesasPage implements OnInit {
     }
 
     if (this.selectedValues == '7') {
-      console.log(this.selectedValues);
+      
       let body = {
         idusuario: this.idusuario,
         idempresa: this.idempresa,
@@ -308,8 +307,7 @@ export class RemesasPage implements OnInit {
           if (this.ordenes.length > 0) {
             this.rows = this.ordenes;
             this.calculateTota(this.rows);
-            console.log(this.rows);
-            console.log("Aqui estoy")
+
             // this.ishidden = false;
             // this.ishidden_1 = true;
             this.ishidden = true;
@@ -389,8 +387,7 @@ export class RemesasPage implements OnInit {
 
     this.postPvdr.uploadImage(this.blobData, imageName, this.image.format).subscribe(async data =>{
       if(data['success']){
-        console.log('success');
-        console.log(data['result']);
+   
         this.images = data['result'];
 
         this.isTakePhoto = true;
@@ -422,7 +419,7 @@ export class RemesasPage implements OnInit {
   }
  
   deleteImage(image: ApiImage, index) {
-    console.log(image);
+    
     // this.images.splice(index, 1);
     this.postPvdr.deleteImage(image._id).subscribe(res => {
       this.images.splice(index, 1);
@@ -438,7 +435,7 @@ export class RemesasPage implements OnInit {
     this.box_price = $event.target.value.replace(/[^0-9.]/g, "");
     if (this.box_price) {
         this.box_price_formatted = this.getCurrency(this.box_price)
-        console.log("box_price_formatted: " + this.box_price_formatted);
+        
     }
   }
   onPriceUp($event){
@@ -450,7 +447,7 @@ export class RemesasPage implements OnInit {
     this.box_price_a = $event.target.value.replace(/[^0-9.]/g, "");
     if (this.box_price_a) {
         this.box_price_formatted_a = this.getCurrency(this.box_price_a)
-        console.log("box_price_formatted: " + this.box_price_formatted_a);
+        
     }
   }
   onPriceUp_a($event){
@@ -461,12 +458,12 @@ export class RemesasPage implements OnInit {
   async onChangePrice_b($event) {
     this.box_price_b = $event.target.value.replace(/[^0-9.]/g, "");
 
-    console.log(this.box_price_b );
+    
     this.box_price_a = Number(this.box_price_formatted_a.replace(/[^0-9.]/g, ""));
 
     if (this.box_price_b) {
         this.box_price_formatted_b = this.getCurrency(this.box_price_b)
-        console.log("box_price_formatted: " + this.box_price_formatted_b);
+        
         if (this.box_price_b > this.box_price_a) {
           const toast = await this.toastCtrl.create({
             message: 'El monto a remesar debe ser menor al total recolectado ',
@@ -489,12 +486,11 @@ export class RemesasPage implements OnInit {
     this.box_price_a = Number(this.box_price_formatted_a.replace(/[^0-9.]/g, ""));
   
     
-    console.log("Change Price c variable efectivo disponible:  " + this.box_price_formatted_b) ;
+  
 
     if (this.box_price_c) {
         this.box_price_formatted_c = this.getCurrency(this.box_price_c)
-        console.log("box_price_formatted: " + this.box_price_c);
-        console.log("total recolectado: " + this.box_price_a);
+
         if (this.box_price_c > this.box_price_a) {
           const toast = await this.toastCtrl.create({
             message: 'El monto a remesar debe ser menor al total recolectado ',
@@ -515,7 +511,7 @@ export class RemesasPage implements OnInit {
   summaryVaticos(){
     let totalReturn = 0;
     var string_ = [];
-    console.log(this.selectedViaticos);
+    
     for (let index = 0; index < this.selectedViaticos.length; index++) {
       // const element = this.selectedViaticos[index]['monto'];
       totalReturn = totalReturn + parseInt(this.selectedViaticos[index]['monto']);
@@ -525,7 +521,7 @@ export class RemesasPage implements OnInit {
     this.viaticosTotal = totalReturn;
     this.viaticosString = string_.join(',');
 
-    console.log(this.viaticosTotal);
+
   }
 
   calculateTota(items){
@@ -552,21 +548,8 @@ export class RemesasPage implements OnInit {
     }
 
     if (this.selectedValues == '5') {
-      if (this.isTakePhoto) {
+     
 
-        let body = {
-          tiptrans: this.selectedValues,
-          idbanco: this.selectedBanco,
-          idusuario: this.idusuario,
-          idviatico: this.viaticosString.toString(),
-          image: this.images[0].name,
-          montoViatico: this.viaticosTotal,
-          viaticosTotal: this.viaticosTotal,
-          total_colectado: this.total_colectado,
-          id_voucher: this.id_voucher,
-          aksi: 'addRemesas'
-        }
-  
         if (this.id_voucher == "") {
           const toast = await this.toastCtrl.create({
             message: 'Debes ingresar un voucher para poder continuar',
@@ -593,12 +576,38 @@ export class RemesasPage implements OnInit {
           toast.present();
           return false;
         }
+
+        if (!this.isTakePhoto) {
+
+          const toast = await this.toastCtrl.create({
+            message: 'Debe agregar una foto para poder remesar ',
+            duration: 2000
+          });
+          toast.present();
+  
+          return false;
+  
+        }
+
+
+        let body = {
+          tiptrans: this.selectedValues,
+          idbanco: this.selectedBanco,
+          idusuario: this.idusuario,
+          idviatico: this.viaticosString.toString(),
+          image: this.images[0].name,
+          montoViatico: this.viaticosTotal,
+          viaticosTotal: this.viaticosTotal,
+          total_colectado: this.total_colectado,
+          id_voucher: this.id_voucher,
+          aksi: 'addRemesas'
+        }
+  
   
         this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-          console.log(data);
+          
           if(data['success']){
-            console.log('success');
-            console.log(data['result']);
+           
   
             const toast = await this.toastCtrl.create({
               message: 'La remesa ha sido generada exitosamente',
@@ -617,13 +626,7 @@ export class RemesasPage implements OnInit {
     
         })
   
-      }else{
-        const toast = await this.toastCtrl.create({
-          message: 'Debe agregar una foto para poder remesar ',
-          duration: 2000
-        });
-        toast.present();
-      }
+      
     }
 
     if (this.selectedValues == '6') {
@@ -658,13 +661,13 @@ export class RemesasPage implements OnInit {
         aksi: 'addRemesas'
       }
 
-      console.log(body.viaticosTotal);
+      
 
       this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-        console.log(data);
+        
         if(data['success']){
-          console.log('success');
-          console.log(data['result']);
+          
+          
 
           const toast = await this.toastCtrl.create({
             message: 'El Finiquito a ha sido generada exitosamente',
@@ -689,33 +692,6 @@ export class RemesasPage implements OnInit {
 
       id_voucher: this.id_voucher;
 
-      
-
-      if (this.isTakePhoto) {
-
-        let body = {
-          tiptrans: this.selectedValues,
-          idbanco: this.selectedBanco,
-          idusuario: this.idusuario,
-          idviatico: this.viaticosString.toString(),
-          image: this.images[0].name,
-          montoViatico: this.viaticosTotal,
-          viaticosTotal: this.viaticosTotal,
-          efectivo_disp: this.box_price_b,
-          total_colectado: this.box_price_c,
-          id_voucher: this.id_voucher,
-          aksi: 'addRemesas'
-        }
-
-          // console.log('tiptrans: ' + this.selectedValues);
-          // console.log('idbanco: ' + this.selectedBanco);
-          // console.log('idusuario: ' + this.idusuario);
-          // console.log('idviatico: ' + this.viaticosString.toString());
-          // console.log('image: ' + this.images[0].name);
-          // console.log('montoViatico: ' + this.viaticosTotal);
-          // console.log('viaticosTotal: ' + this.viaticosTotal);
-          // console.log('efectivo_disp: ' + this.box_price_b);
-          // console.log(' total_colectado: ' + this.box_price_c);
 
       if (this.box_price_b == 0) {
         const toast = await this.toastCtrl.create({
@@ -744,11 +720,37 @@ export class RemesasPage implements OnInit {
         return false;
       }
 
+      
+
+      if (!this.isTakePhoto) {
+
+        const toast = await this.toastCtrl.create({
+          message: 'Debe agregar una foto para poder remesar ',
+          duration: 2000
+        });
+        toast.present();
+
+        return false;
+
+      }
+
+      let body = {
+        tiptrans: this.selectedValues,
+        idbanco: this.selectedBanco,
+        idusuario: this.idusuario,
+        idviatico: this.viaticosString.toString(),
+        image: this.images[0].name,
+        montoViatico: this.viaticosTotal,
+        viaticosTotal: this.viaticosTotal,
+        efectivo_disp: this.box_price_b,
+        total_colectado: this.box_price_c,
+        id_voucher: this.id_voucher,
+        aksi: 'addRemesas'
+      }
+
       this.postPvdr.postData(body, 'proses-api.php').subscribe(async data =>{
-        console.log(data);
+
         if(data['success']){
-          console.log('success');
-          console.log(data['result']);
 
           const toast = await this.toastCtrl.create({
             message: 'La remesa ha sido generada exitosamente',
@@ -766,14 +768,6 @@ export class RemesasPage implements OnInit {
         }
   
       })
-
-      }else{
-        const toast = await this.toastCtrl.create({
-          message: 'Debe agregar una foto para poder remesar ',
-          duration: 2000
-        });
-        toast.present();
-      }
 
 
 
