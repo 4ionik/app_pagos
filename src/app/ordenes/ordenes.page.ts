@@ -86,8 +86,8 @@ export class OrdenesPage implements OnInit {
         csvRecord.from = curruntRecord[3].trim().replace(".", "-").replace(".", "-");  
         csvRecord.to = curruntRecord[4].trim().replace(".", "-").replace(".", "-");  
         csvRecord.cost = curruntRecord[5].trim();
-        csvRecord.wight = curruntRecord[6].trim();
-        csvRecord.volume = curruntRecord[7].trim();
+        csvRecord.wight = curruntRecord[6].trim()  == '' ? 0 : curruntRecord[6].trim();
+        csvRecord.volume = curruntRecord[7].trim() == '' ? 0 : curruntRecord[7].trim();
         csvRecord.type = curruntRecord[8].trim();
         csvRecord.client = curruntRecord[9].trim();
         csvRecord.email = curruntRecord[10].trim();
